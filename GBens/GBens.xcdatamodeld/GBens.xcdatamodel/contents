@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Bem" representedClassName="Bem" syncable="YES">
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="codBem" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dt_aquisicao" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dt_inventario" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="estadoConservacao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geolocdatascan" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nome_fabricante" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nome_pbms" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nr_serie" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="obs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parcelas" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pbms" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbms1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbms2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbms3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbms4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scan_date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="scannedImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="subcategoria" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dep_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="bem_owner" inverseEntity="Dependencia" syncable="YES"/>
+        <relationship name="place" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Localizacao" inverseName="bem_place" inverseEntity="Localizacao" syncable="YES"/>
+        <relationship name="user_inventariante" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Usuario" inverseName="bem_scanned" inverseEntity="Usuario" syncable="YES"/>
+    </entity>
+    <entity name="Dependencia" representedClassName="Dependencia" syncable="YES">
+        <attribute name="codUor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefixo" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bem_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="dep_owner" inverseEntity="Bem" syncable="YES"/>
+        <relationship name="inventariante" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Usuario" inverseName="dep_inventariada" inverseEntity="Usuario" syncable="YES"/>
+        <relationship name="place_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Localizacao" inverseName="dep_onwer" inverseEntity="Localizacao" syncable="YES"/>
+    </entity>
+    <entity name="Localizacao" representedClassName="Localizacao" syncable="YES">
+        <attribute name="andar" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="codLoc" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endereco" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sala" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="setor" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bem_place" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="place" inverseEntity="Bem" syncable="YES"/>
+        <relationship name="dep_onwer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="place_owner" inverseEntity="Dependencia" syncable="YES"/>
+    </entity>
+    <entity name="Usuario" representedClassName="Usuario" syncable="YES">
+        <attribute name="codUser" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="foto" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bem_scanned" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="user_inventariante" inverseEntity="Bem" syncable="YES"/>
+        <relationship name="dep_inventariada" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="inventariante" inverseEntity="Dependencia" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
+        <element name="Dependencia" positionX="196" positionY="-52" width="128" height="133"/>
+        <element name="Localizacao" positionX="-99" positionY="-162" width="128" height="148"/>
+        <element name="Usuario" positionX="-45" positionY="207" width="126" height="133"/>
+    </elements>
 </model>
