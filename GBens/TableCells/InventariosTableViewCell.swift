@@ -28,7 +28,7 @@ class InventariosTableViewCell: UITableViewCell {
     func setupCell(dependencia: Dependencia){
         
         self.textLabel?.text = dependencia.prefixo
-        self.imageView?.= #imageLiteral(resourceName: "ic_info")
+//        self.imageView?.image = UIApplicationShortcutIcon
     
     
     }

@@ -1,9 +1,9 @@
 //
 //  Usuario+CoreDataProperties.swift
-//  GBens
+//  
 //
-//  Created by Alexandre de Sousa Albuquerque on 20/06/17.
-//  Copyright © 2017 Alexandre de Sousa Albuquerque. All rights reserved.
+//  Created by Alexandre de Sousa Albuquerque on 24/06/17.
+//
 //
 
 import Foundation
@@ -20,6 +20,7 @@ extension Usuario {
     @NSManaged public var foto: NSData?
     @NSManaged public var nome: String?
     @NSManaged public var password: String?
+    @NSManaged public var email: String?
     @NSManaged public var bem_scanned: NSSet?
     @NSManaged public var dep_inventariada: NSSet?
 

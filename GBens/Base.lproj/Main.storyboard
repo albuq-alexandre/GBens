@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1547,7 +1548,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BemPhoto" width="2448" height="3264"/>
+        <image name="BemPhoto" width="1224" height="1632"/>
         <image name="FundoBrilho" width="207" height="368"/>
         <image name="Person Photo" width="48" height="48"/>
         <image name="PlacadeBem" width="1224" height="1632"/>

@@ -44,6 +44,7 @@
     </entity>
     <entity name="Usuario" representedClassName="Usuario" syncable="YES">
         <attribute name="codUser" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="foto" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -54,6 +55,6 @@
         <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
         <element name="Dependencia" positionX="196" positionY="-52" width="128" height="133"/>
         <element name="Localizacao" positionX="-99" positionY="-162" width="128" height="148"/>
-        <element name="Usuario" positionX="-45" positionY="207" width="126" height="133"/>
+        <element name="Usuario" positionX="-45" positionY="207" width="126" height="150"/>
     </elements>
 </model>

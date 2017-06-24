@@ -116,7 +116,7 @@ class LoginViewController: UIViewController {
         switch identifier {
         case "segueToResumo":
             let dest = segue.destination as! InventarianteTableViewController
-               dest.theuser = self.theuser
+              dest.from_user = self.theuser
             
         default:
             break;

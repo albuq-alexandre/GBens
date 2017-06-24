@@ -11,5 +11,10 @@ import CoreData
 
 @objc(Usuario)
 public class Usuario: NSManagedObject {
+    
+    @objc
+    func initial() ->  NSString  {
+        return (self.nome! as NSString).substring(to: 1) as NSString
+    }
 
 }
