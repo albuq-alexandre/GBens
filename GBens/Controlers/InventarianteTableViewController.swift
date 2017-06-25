@@ -30,7 +30,7 @@ class InventarianteTableViewController: UITableViewController {
         let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dep_inventariada", ascending: true)]
         fetchRequest.fetchBatchSize = 10
-        fetchRequest.predicate = NSPredicate(format: "email contains %@", from_user!.email!) // FIXME: - Tratar se vazio.
+        fetchRequest.predicate = NSPredicate(format: "email == %@", from_user!.email!) // FIXME: - Tratar se vazio.
         
 
         let controller = NSFetchedResultsController<Usuario>(

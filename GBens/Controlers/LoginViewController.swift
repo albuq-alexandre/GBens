@@ -36,34 +36,10 @@ class LoginViewController: UIViewController {
             
             if error == nil {
                 
-                Auth.auth().addStateDidChangeListener { (auth, theuser) in
+                Auth.auth().addStateDidChangeListener { (auth, user) in
                     if user != nil {
                         self.theuser = user
-                        user?.getIDToken() { (authToken, error) in
-                            if authToken != nil {
-                                print(authToken!)
-                                let config = URLSessionConfiguration.default
-                                let session = URLSession(configuration: config)
-                                
-                                let urlfirebase = URL(string: "https:gbem-b2c8c.firebaseio.com/Bens.json")
-                                
-                                var request = URLRequest(url: urlfirebase!)
-                                
-                                request.httpMethod = "GET"
-                                request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
-                                
-                                let task = session.dataTask(with: request) { (data, response, error) in
-                                    // var jBens: [String : Any] = [:]
-                                    if error != nil {
-                                        print(error!.localizedDescription)
-                                    } else {
-                                        let jBens = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-                                        print (jBens!)
-                                    }
-                                }
-                                task.resume()
-                            }
-                        }
+                        let inventarios = getJSONrest(usuario: user!, path: ")
                     } else {
                         print ("erro de user")
                     }
@@ -131,17 +107,94 @@ class LoginViewController: UIViewController {
 }
 }
 
+// MARK: - JSON download
+
+func getJSONrest (usuario: User, path: String) -> [String: Any] {
+    var jBens: [String : Any] = [:]
+    
+    usuario.getIDToken() { (authToken, error) in
+        if authToken != nil {
+           
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            let urlfirebase = URL("https:gbem-b2c8c.firebaseio.com/\(path).json")
+            
+            var request = URLRequest(url: urlfirebase!)
+            
+            request.httpMethod = "GET"
+            request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
+            
+            let task = session.dataTask(with: request) { (data, response, error) in
+                if error != nil {
+                    let jBens = nil
+                } else {
+                    let jBens = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                }
+            }
+            task.resume()
+        }
+
+    return jBens
+    
+    
+    
+}
 
 
 
+// MARK: - New User
 
+
+
+// MARK: - Renew Session Login
 //
-//
+
+
+    func renewSessionLogin(usuario: Usuario?) {
+        
+        let alertController = UIAlertController(title: "Login", message: "Por favor entre com suas credenciais", preferredStyle: .alert)
+        
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+            //This is called when the user presses the cancel button.
+            print("You've pressed the cancel button");
+        }
+        
+        let actionLogin = UIAlertAction(title: "Login", style: .default) { (action:UIAlertAction) in
+            //This is called when the user presses the login button.
+            let textUser = alertController.textFields![0] as UITextField;
+            let textPW = alertController.textFields![1] as UITextField
+            
+            print("The user entered:%@ & %@",textUser.text!,textPW.text!);
+        }
+        
+        alertController.addTextField { (textField) -> Void in
+            //Configure the attributes of the first text box.
+            textField.placeholder = "E-mail"
+        }
+        
+        alertController.addTextField { (textField) -> Void in
+            //Configure the attributes of the second text box.
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        
+        //Add the buttons
+        alertController.addAction(actionCancel)
+        alertController.addAction(actionLogin)
+        
+        //Present the alert controller
+        self.presentViewController(alertController, animated: true, completion:nil)
+        
+        
+        
+}
+
 //
 //
 //                                }
 //
-//                            }
+                            }
 //
 //
 
