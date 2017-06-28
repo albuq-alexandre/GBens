@@ -28,15 +28,15 @@ class InventarianteTableViewController: UITableViewController {
         }
         
         let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dep_inventariada", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
         fetchRequest.fetchBatchSize = 10
-        fetchRequest.predicate = NSPredicate(format: "email == %@", from_user!.email!) // FIXME: - Tratar se vazio.
+//        fetchRequest.predicate = NSPredicate(format: "email == %@", from_user!.email!) // FIXME: - Tratar se vazio.
         
 
         let controller = NSFetchedResultsController<Usuario>(
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext(),
-            sectionNameKeyPath: "dep_inventariada",
+            sectionNameKeyPath: "nome",
             cacheName: "TabelaInventariadas")
         
         
@@ -55,6 +55,10 @@ class InventarianteTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 163
+        
         var _ = fetchedResultsController()
         
         tableView.reloadData()
@@ -76,6 +80,7 @@ class InventarianteTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return fetchedResultsController().sections!.count
+//    return 0
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -95,18 +100,26 @@ class InventarianteTableViewController: UITableViewController {
     
         
         return fetchedResultsController().sections![section].numberOfObjects
+        //    return 0
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "AccountSwitcherTableViewCell")
-            //set the data here
+//            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "AccountSwitcherTableViewCell")
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell", for: indexPath) as! AccountSwitcherTableViewCell
+            cell.setupCell(theuser: fetchedResultsController().object(at: indexPath))
+            
             return cell
         }
          else {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "InventariosTableViewCell")
+//            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "InventariosTableViewCell")
             //set the data here
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InventariosTableViewCell", for: indexPath) as! InventariosTableViewCell
+            cell.setupCell(theuser: fetchedResultsController().object(at: indexPath))
+            
             return cell
         }
     }
@@ -188,7 +201,7 @@ extension InventarianteTableViewController : NSFetchedResultsControllerDelegate 
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         case .update:
-            (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(dependencia: anObject as! Dependencia)
+            (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(theuser: anObject as! Usuario)
         }
     }
     

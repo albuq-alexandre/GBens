@@ -39,7 +39,19 @@ class LoginViewController: UIViewController {
                 Auth.auth().addStateDidChangeListener { (auth, user) in
                     if user != nil {
                         self.theuser = user
-                        let inventarios = getJSONrest(usuario: user!, path: ")
+                        let path = "Users\\" + (user?.email?.components(separatedBy: "@")[0])!
+                        print (path)
+                        
+                        
+//                        let inventariadas = getJSONrest(usuario: user!, path: path)
+//                        
+//                        for (nr, prefixo) in inventariadas {
+//                            print (nr)
+//                            print (prefixo)
+////                            atualizaCoreData(usuario: user!, prefixo)
+                      //  }
+                    
+                        
                     } else {
                         print ("erro de user")
                     }
@@ -105,43 +117,49 @@ class LoginViewController: UIViewController {
  }
 
 }
-}
+    }
 
 // MARK: - JSON download
 
-func getJSONrest (usuario: User, path: String) -> [String: Any] {
-    var jBens: [String : Any] = [:]
-    
-    usuario.getIDToken() { (authToken, error) in
-        if authToken != nil {
-           
-            let config = URLSessionConfiguration.default
-            let session = URLSession(configuration: config)
-            
-            let urlfirebase = URL("https:gbem-b2c8c.firebaseio.com/\(path).json")
-            
-            var request = URLRequest(url: urlfirebase!)
-            
-            request.httpMethod = "GET"
-            request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
-            
-            let task = session.dataTask(with: request) { (data, response, error) in
-                if error != nil {
-                    let jBens = nil
-                } else {
-                    let jBens = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-                }
-            }
-            task.resume()
-        }
-
-    return jBens
-    
-    
-    
-}
-
-
+//func getJSONrest (usuario: User, path: String) -> [String: Any] {
+////
+//    
+//    usuario.getIDToken() { (authToken, error) in
+//        if authToken != nil {
+//           
+//            let config = URLSessionConfiguration.default
+//            let session = URLSession(configuration: config)
+//            
+//            let urlpath = "https:gbem-b2c8c.firebaseio.com/\(path).json"
+//            
+//            let urlfirebase = URL(string: urlpath)
+//            
+//            var request = URLRequest(url: urlfirebase!)
+//            
+//            request.httpMethod = "GET"
+//            request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
+//            
+//            let task = session.dataTask(with: request) { (data, response, error) in
+//                if error != nil {
+//                    var jBens: [String : Any] = [:]
+//                    jBens.updateValue("0", forKey: "erro")
+//                } else {
+//                    let jBens = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+//                }
+//            }
+//            task.resume()
+//        }
+//        
+//        var jBens: [String : Any] = [:]
+//        jBens.updateValue("0", forKey: "erro")
+//
+//    return jBens
+//    
+//    
+//    
+//}
+//}
+//
 
 // MARK: - New User
 
@@ -184,17 +202,20 @@ func getJSONrest (usuario: User, path: String) -> [String: Any] {
         alertController.addAction(actionLogin)
         
         //Present the alert controller
-        self.presentViewController(alertController, animated: true, completion:nil)
+//        self.presentViewController(alertController, animated: true, completion:nil)
         
         
         
 }
 
+
+
+
+
 //
 //
-//                                }
-//
-                            }
+                              //
+
 //
 //
 

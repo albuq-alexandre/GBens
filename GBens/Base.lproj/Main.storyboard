@@ -409,6 +409,7 @@
                                         <constraint firstItem="NqS-Kd-0uE" firstAttribute="top" secondItem="zJr-da-ra3" secondAttribute="topMargin" constant="8" id="MBZ-yk-Hp0"/>
                                         <constraint firstItem="ae4-jc-2QK" firstAttribute="centerX" secondItem="zJr-da-ra3" secondAttribute="centerX" id="Rpv-ZT-wls"/>
                                         <constraint firstItem="NqS-Kd-0uE" firstAttribute="centerX" secondItem="zJr-da-ra3" secondAttribute="centerX" id="StD-Hl-iMG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ae4-jc-2QK" secondAttribute="bottom" constant="5" id="Vyt-HM-re5"/>
                                         <constraint firstItem="ae4-jc-2QK" firstAttribute="top" secondItem="NqS-Kd-0uE" secondAttribute="bottom" constant="24" id="nmN-s7-N46"/>
                                     </constraints>
                                 </tableViewCellContentView>

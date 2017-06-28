@@ -20,7 +20,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        FirebaseApp.configure()
-        
+        createUser()
        
         
         
@@ -56,7 +56,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    lazy public var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -99,6 +99,80 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+//    func atualizaCoreData (usuario: User, prefixo: String) {
+//        
+//        let path = "Inventariadas\\" + prefixo
+//        let BensAInventariar = getJSONrest(usuario: usuario, path: path)
+//        
+//        //let bemEntityDescription = NSEntityDescription.entityForName("Bem", inManagedObjectContext: coreDataStack.context)
+//        
+//        for (nrBem) in BensAInventariar {
+//            
+//            let bem = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
+//        //    let bem = Bem(entity: bemEntityDescription!, insertinto: managedObjectContext)
+//            
+//            bem.codBem = (nrBem).value as? String
+//            
+//            
+//            
+//            
+//            
+//            
+////            bem.codBem = nrBem as String
+// //           bem.categoria = BensAInventariar.keys
+//            
+//        }
+//        
     
+        
+        
+    func createUser() {
+        
+        let myuser = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: persistentContainer.viewContext) as! Usuario
+        
+        myuser.codUser = "teste"
+        myuser.email = "teste@teste.com"
+        myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
+        
+   
+        
+        let dep = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
+        
+        dep.codUor = Int64(999899)
+        dep.nome = "Dependencia 999899"
+        dep.prefixo = String(9998)
+        
+        for i in 0..<100 {
+            let c = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
+            c.codBem = "0000000000\(i)"
+            c.nome = "Bem nr. 000000000\(i)"
+            
+            
+            dep.addToBem_owner(c)
+            
+            let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: persistentContainer.viewContext) as! Localizacao
+            
+            loc.andar = Int16(i * 3)
+            loc.codLoc = Int64(i)
+            loc.endereco = "Endereco \(i * 2)"
+            
+            loc.addToBem_place(c)
+            
+            
+            
+            
+            c.addObserver(self, forKeyPath: "nome", options: .new, context: nil)
+            
+        }
+        
+    }
+
+    
+    
+//           }
+
 }
+
+
+
 

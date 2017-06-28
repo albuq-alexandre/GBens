@@ -6,11 +6,57 @@
 //  Copyright © 2017 Alexandre de Sousa Albuquerque. All rights reserved.
 //
 
-//import Foundation
-//import CoreData
+import Foundation
+import CoreData
+import FirebaseAuth
 ////
-//class DBCoreDataController {
+class DBCoreDataController {
 //
+// MARK: - Complicadores do Core Data
+    
+//    func atualizaCoreData (usuario: User, prefixo: String) {
+//       
+//        let path = "Inventariadas\\" + prefixo
+//       let BensAInventariar = getJSONrest(usuario: usuario, path: path)
+//        
+//        
+//        for (nrBem) in BensAInventariar {
+//            
+//            let bem = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
+//            
+//            bem.
+//            
+//            
+//        }
+//        
+//        
+//        
+//        
+//        
+//        
+//        return
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    // MARK: - Core Data stack
 //    
 //    
@@ -55,7 +101,7 @@
 //                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 //            }
 //        }
-//    }
+    }
 //
 //        
 //    

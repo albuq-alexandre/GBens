@@ -30,7 +30,12 @@ class AccountSwitcherTableViewCell: UITableViewCell {
 
     func setupCell(theuser:Usuario){
         
+        if theuser.foto != nil {
         UserAvatar.image = UIImage(data: theuser.foto! as Data)
+        } else {
+            UserAvatar.image = #imageLiteral(resourceName: "Person Photo")
+        }
+        
         UserAvatar.asAvatar()
         UserNameButton.setTitle(theuser.nome, for: .normal)
         
