@@ -62,5 +62,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>GBens precisa usar sua Câmera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>GBens precisa usar sua Fototeca</string>
 </dict>
 </plist>
