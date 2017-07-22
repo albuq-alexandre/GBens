@@ -25,10 +25,10 @@ class InventariosTableViewCell: UITableViewCell {
     }
 
     
-    func setupCell(theuser:Usuario){
+    func setupCell(inventariada:Dependencia){
         
-        self.textLabel?.text = theuser.dep_inventariada?.member("prefixo") as? String
-//        self.imageView?.image = UIApplicationShortcutIcon
+        self.textLabel?.text = inventariada.prefixo
+        //        self.imageView?.image = UIApplicationShortcutIcon
     
     
     }

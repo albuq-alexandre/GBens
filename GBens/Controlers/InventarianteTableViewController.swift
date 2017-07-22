@@ -14,42 +14,40 @@ import CoreData
 class InventarianteTableViewController: UITableViewController {
 
     
-    weak var theuser : Usuario?
-    var from_user : User?
-    weak var thePrefixo : Dependencia?
+   
+    var from_user : String?
     
-    var usuario_fetchedResultsController : NSFetchedResultsController<Usuario>?
+   
+    var prefixo_fetchedResultsController : NSFetchedResultsController<Dependencia>?
     
     
     
-    func fetchedResultsController() -> NSFetchedResultsController<Usuario> {
-        if let controller = usuario_fetchedResultsController {
-            return controller
+    func pfx_fetchedResultsController() -> NSFetchedResultsController<Dependencia> {
+        if let controller_pfx = prefixo_fetchedResultsController {
+            return controller_pfx
         }
         
-        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
-        fetchRequest.fetchBatchSize = 10
-//        fetchRequest.predicate = NSPredicate(format: "email == %@", from_user!.email!) // FIXME: - Tratar se vazio.
+        let fetchRequest : NSFetchRequest<Dependencia> = Dependencia.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "prefixo", ascending: true)]
+        fetchRequest.fetchBatchSize = 20
+        //fetchRequest.predicate = NSPredicate(format: "ANY inventariante.email == %@", (from_user)!)
         
-
-        let controller = NSFetchedResultsController<Usuario>(
+        let controller_pfx = NSFetchedResultsController<Dependencia>(
             fetchRequest: fetchRequest,
-            managedObjectContext: managedObjectContext(),
-            sectionNameKeyPath: "nome",
-            cacheName: "TabelaInventariadas")
+            managedObjectContext: (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext,
+            sectionNameKeyPath: "prefixo",
+            cacheName: "TabelaPrefixo")
         
         
-        controller.delegate = self
+        controller_pfx.delegate = self
         
-        try! controller.performFetch()
+        try! controller_pfx.performFetch()
         
-        usuario_fetchedResultsController = controller
+        prefixo_fetchedResultsController = controller_pfx
         
-        return controller
+        return controller_pfx
     }
 
-    
 
     
     override func viewDidLoad() {
@@ -59,7 +57,7 @@ class InventarianteTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 163
         
-        var _ = fetchedResultsController()
+        _ = pfx_fetchedResultsController()
         
         tableView.reloadData()
         
@@ -79,7 +77,7 @@ class InventarianteTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return fetchedResultsController().sections!.count
+        return pfx_fetchedResultsController().sections!.count
 //    return 0
     }
 
@@ -99,17 +97,34 @@ class InventarianteTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
     
         
-        return fetchedResultsController().sections![section].numberOfObjects
-        //    return 0
+        return pfx_fetchedResultsController().sections![section].numberOfObjects
+//            return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-//            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "AccountSwitcherTableViewCell")
+            
+            let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+            
+            let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
+            fetchRequest.fetchBatchSize = 10
+            
+            fetchRequest.predicate = NSPredicate(format: "email == %@", self.from_user!) // FIXME: - Tratar se vazio.
+            var fetchedUser : [Usuario]
+            do {
+                
+                fetchedUser = try managedContext.fetch(fetchRequest)
+                
+            } catch {
+                fatalError("Falha ao encontrar usuário: \(error)")
+                
+            }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell", for: indexPath) as! AccountSwitcherTableViewCell
-            cell.setupCell(theuser: fetchedResultsController().object(at: indexPath))
+            
+            cell.setupCell(theuser: fetchedUser[0])
             
             return cell
         }
@@ -117,8 +132,9 @@ class InventarianteTableViewController: UITableViewController {
 //            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "InventariosTableViewCell")
             //set the data here
             
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "InventariosTableViewCell", for: indexPath) as! InventariosTableViewCell
-            cell.setupCell(theuser: fetchedResultsController().object(at: indexPath))
+            cell.setupCell(inventariada: pfx_fetchedResultsController().object(at: indexPath))
             
             return cell
         }
@@ -201,7 +217,7 @@ extension InventarianteTableViewController : NSFetchedResultsControllerDelegate 
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         case .update:
-            (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(theuser: anObject as! Usuario)
+            (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(inventariada: anObject as! Dependencia)
         }
     }
     

@@ -37,7 +37,7 @@ class AccountSwitcherTableViewCell: UITableViewCell {
         }
         
         UserAvatar.asAvatar()
-        UserNameButton.setTitle(theuser.nome, for: .normal)
+        UserNameButton.setTitle(theuser.email, for: .normal)
         
         
     }

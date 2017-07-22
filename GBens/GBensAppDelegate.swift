@@ -15,12 +15,14 @@ import Firebase
 class GBensAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-       FirebaseApp.configure()
+       
         createUser()
+        FirebaseApp.configure()
+        
        
         
         
@@ -124,6 +126,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //        
     
+    // MARK: - Dummy test CoreData
         
         
     func createUser() {
@@ -140,7 +143,8 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         
         dep.codUor = Int64(999899)
         dep.nome = "Dependencia 999899"
-        dep.prefixo = String(9998)
+        dep.prefixo = "9998"
+        dep.addToInventariante(myuser)
         
         for i in 0..<100 {
             let c = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
@@ -161,10 +165,10 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             
             
             
-            c.addObserver(self, forKeyPath: "nome", options: .new, context: nil)
+            //c.addObserver(self, forKeyPath: "nome", options: .new, context: nil)
             
         }
-        
+        saveContext ()
     }
 
     

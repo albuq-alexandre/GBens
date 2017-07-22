@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var passWord: UITextField!
-     weak var theuser : User?
+     var theuser : String?
     @IBAction func loginNoFifebase(_ sender: Any) {
     
     if userName.text == ""  {
@@ -38,9 +38,27 @@ class LoginViewController: UIViewController {
                 
                 Auth.auth().addStateDidChangeListener { (auth, user) in
                     if user != nil {
-                        self.theuser = user
+                        self.theuser = user?.email
                         let path = "Users\\" + (user?.email?.components(separatedBy: "@")[0])!
-                        print (path)
+                        print (path)  //FIXME: - Download dos dados Firebase
+                        
+                        
+//                        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
+//                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
+//                        fetchRequest.fetchBatchSize = 1
+//                        fetchRequest.predicate = NSPredicate(format: "email == %@", user!.email!)
+//                        
+//                        var fetchedUser : [Usuario]
+//                        do {
+//                            
+//                            fetchedUser = try fetchRequest.execute()
+//                            
+//                        } catch {
+//                            fatalError("Falha ao encontrar usuário: \(error)")
+//                            
+//                        }
+//                        
+                        
                         
                         
 //                        let inventariadas = getJSONrest(usuario: user!, path: path)
@@ -104,8 +122,7 @@ class LoginViewController: UIViewController {
         switch identifier {
         case "segueToResumo":
             let dest = segue.destination as! InventarianteTableViewController
-              dest.from_user = self.theuser
-            
+              dest.from_user = self.userName.text
         default:
             break;
             
