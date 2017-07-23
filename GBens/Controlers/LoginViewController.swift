@@ -39,8 +39,8 @@ class LoginViewController: UIViewController {
                 Auth.auth().addStateDidChangeListener { (auth, user) in
                     if user != nil {
                         self.theuser = user?.email
-                        let path = "Users\\" + (user?.email?.components(separatedBy: "@")[0])!
-                        print (path)  //FIXME: - Download dos dados Firebase
+                       // let path = "Users\\" + (user?.email?.components(separatedBy: "@")[0])!
+                       // print (path)  //FIXME: - Download dos dados Firebase
                         
                         
 //                        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()

@@ -30,12 +30,12 @@ class InventarianteTableViewController: UITableViewController {
         let fetchRequest : NSFetchRequest<Dependencia> = Dependencia.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "prefixo", ascending: true)]
         fetchRequest.fetchBatchSize = 20
-        //fetchRequest.predicate = NSPredicate(format: "ANY inventariante.email == %@", (from_user)!)
+        fetchRequest.predicate = NSPredicate(format: "ANY inventariante.email == %@", (from_user)!)
         
         let controller_pfx = NSFetchedResultsController<Dependencia>(
             fetchRequest: fetchRequest,
             managedObjectContext: (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext,
-            sectionNameKeyPath: "prefixo",
+            sectionNameKeyPath: nil,
             cacheName: "TabelaPrefixo")
         
         
@@ -58,6 +58,7 @@ class InventarianteTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 163
         
         _ = pfx_fetchedResultsController()
+        
         
         tableView.reloadData()
         
@@ -88,56 +89,68 @@ class InventarianteTableViewController: UITableViewController {
     }
 
     
-    
+   
     
     
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-    
+        
         
         return pfx_fetchedResultsController().sections![section].numberOfObjects
-//            return 1
     }
-
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        
+                    let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
+                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
+                    fetchRequest.fetchBatchSize = 10
+        
+                    fetchRequest.predicate = NSPredicate(format: "email == %@", self.from_user!) // FIXME: - Tratar se vazio.
+                    var fetchedUser : [Usuario]
+                    do {
+        
+                        fetchedUser = try managedContext.fetch(fetchRequest)
+        
+                    } catch {
+                        fatalError("Falha ao encontrar usuário: \(error)")
+        
+                    }
+        
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell") as! AccountSwitcherTableViewCell
+                    
+                    cell.setupCell(theuser: fetchedUser[0])
+                    
+                    return cell
+        
+        
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        if section == 0 {
+        
+            return 163
+        } else {
+            
+            return 0
+        }
+        
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            
-            let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
-            
-            let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
-            fetchRequest.fetchBatchSize = 10
-            
-            fetchRequest.predicate = NSPredicate(format: "email == %@", self.from_user!) // FIXME: - Tratar se vazio.
-            var fetchedUser : [Usuario]
-            do {
-                
-                fetchedUser = try managedContext.fetch(fetchRequest)
-                
-            } catch {
-                fatalError("Falha ao encontrar usuário: \(error)")
-                
-            }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell", for: indexPath) as! AccountSwitcherTableViewCell
-            
-            cell.setupCell(theuser: fetchedUser[0])
-            
-            return cell
-        }
-         else {
-//            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "InventariosTableViewCell")
-            //set the data here
-            
+        
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "InventariosTableViewCell", for: indexPath) as! InventariosTableViewCell
             cell.setupCell(inventariada: pfx_fetchedResultsController().object(at: indexPath))
             
             return cell
-        }
+        
     }
     
 

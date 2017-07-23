@@ -161,13 +161,41 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             loc.endereco = "Endereco \(i * 2)"
             
             loc.addToBem_place(c)
-            
+            dep.addToPlace_owner(loc)
             
             
             
             //c.addObserver(self, forKeyPath: "nome", options: .new, context: nil)
             
         }
+        
+        let dep1 = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
+        
+        dep1.codUor = Int64(999897)
+        dep1.nome = "Dependencia 999897"
+        dep1.prefixo = "9997"
+        dep1.addToInventariante(myuser)
+        
+        for i in 0..<100 {
+            let c = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
+            c.codBem = "1000000000\(i)"
+            c.nome = "Bem nr. 100000000\(i)"
+            
+            
+            dep1.addToBem_owner(c)
+            
+            let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: persistentContainer.viewContext) as! Localizacao
+            
+            loc.andar = Int16(i * 3)
+            loc.codLoc = Int64(i)
+            loc.endereco = "Endereco \(i * 2)"
+            
+            loc.addToBem_place(c)
+            dep1.addToPlace_owner(loc)
+        }
+        
+        
+        
         saveContext ()
     }
 
