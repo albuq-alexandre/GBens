@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
                 let alertController = UIAlertController(title: "Sucesso", message: "Usuário Autenticado", preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(defaultAction)
-                self.present(alertController, animated: true, completion: nil)
+               // self.present(alertController, animated: true, completion: nil)
         
             } else {
                 

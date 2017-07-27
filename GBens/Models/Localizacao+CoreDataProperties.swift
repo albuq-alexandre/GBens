@@ -2,7 +2,7 @@
 //  Localizacao+CoreDataProperties.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 27/06/17.
+//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
 //
 //
 
@@ -21,8 +21,13 @@ extension Localizacao {
     @NSManaged public var endereco: String?
     @NSManaged public var sala: String?
     @NSManaged public var setor: String?
+    @NSManaged public var complemento: NSObject?
+    @NSManaged public var bairro: String?
+    @NSManaged public var cidade: String?
+    @NSManaged public var uf: String?
     @NSManaged public var bem_place: NSSet?
     @NSManaged public var dep_onwer: Dependencia?
+    @NSManaged public var dep_host: Dependencia?
 
 }
 

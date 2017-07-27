@@ -14,7 +14,9 @@ import CoreData
 class InventarianteTableViewController: UITableViewController {
 
     
-   
+    weak var dep : Dependencia?
+    weak var usuario : Usuario?
+    
     var from_user : String?
     
    
@@ -36,7 +38,7 @@ class InventarianteTableViewController: UITableViewController {
             fetchRequest: fetchRequest,
             managedObjectContext: (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext,
             sectionNameKeyPath: nil,
-            cacheName: "TabelaPrefixo")
+            cacheName: nil)
         
         
         controller_pfx.delegate = self
@@ -148,11 +150,19 @@ class InventarianteTableViewController: UITableViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "InventariosTableViewCell", for: indexPath) as! InventariosTableViewCell
             cell.setupCell(inventariada: pfx_fetchedResultsController().object(at: indexPath))
-            
+        
+        
             return cell
         
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.dep = pfx_fetchedResultsController().object(at: indexPath)
+//        self.performSegue(withIdentifier: "toInventarioDetalhe", sender: nil)
+        
+    }
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -189,16 +199,25 @@ class InventarianteTableViewController: UITableViewController {
     }
     */
 
-    /*
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+        if let identifier = segue.identifier{
+            switch identifier {
+            case "toInventarioDetalhe":
+                (segue.destination as! InventarioViewController).dep = self.pfx_fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
+                
+        
+            default:
+                break;
+            }
+   }
 
+}
 }
 
 extension InventarianteTableViewController : NSFetchedResultsControllerDelegate {

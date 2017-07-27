@@ -29,17 +29,26 @@
         <attribute name="codUor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prefixo" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bem_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="dep_owner" inverseEntity="Bem" syncable="YES"/>
+        <attribute name="ultimasincroniz" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="ultimoInventario" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="bem_owner" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Bem" inverseName="dep_owner" inverseEntity="Bem" syncable="YES"/>
+        <relationship name="endPrincipal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Localizacao" inverseName="dep_host" inverseEntity="Localizacao" syncable="YES"/>
         <relationship name="inventariante" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Usuario" inverseName="dep_inventariada" inverseEntity="Usuario" syncable="YES"/>
         <relationship name="place_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Localizacao" inverseName="dep_onwer" inverseEntity="Localizacao" syncable="YES"/>
+        <relationship name="usuario_local" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Usuario" inverseName="dep_localizacao" inverseEntity="Usuario" syncable="YES"/>
     </entity>
     <entity name="Localizacao" representedClassName="Localizacao" syncable="YES">
         <attribute name="andar" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="bairro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cidade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="codLoc" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="complemento" optional="YES" syncable="YES"/>
         <attribute name="endereco" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sala" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="setor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uf" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="bem_place" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="place" inverseEntity="Bem" syncable="YES"/>
+        <relationship name="dep_host" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="endPrincipal" inverseEntity="Dependencia" syncable="YES"/>
         <relationship name="dep_onwer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="place_owner" inverseEntity="Dependencia" syncable="YES"/>
     </entity>
     <entity name="Usuario" representedClassName="Usuario" syncable="YES">
@@ -50,11 +59,12 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="bem_scanned" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="user_inventariante" inverseEntity="Bem" syncable="YES"/>
         <relationship name="dep_inventariada" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="inventariante" inverseEntity="Dependencia" syncable="YES"/>
+        <relationship name="dep_localizacao" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="usuario_local" inverseEntity="Dependencia" syncable="YES"/>
     </entity>
     <elements>
         <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
-        <element name="Dependencia" positionX="196" positionY="-52" width="128" height="133"/>
-        <element name="Localizacao" positionX="-99" positionY="-162" width="128" height="148"/>
-        <element name="Usuario" positionX="-45" positionY="207" width="126" height="150"/>
+        <element name="Dependencia" positionX="304" positionY="-81" width="128" height="193"/>
+        <element name="Localizacao" positionX="79" positionY="-85" width="128" height="223"/>
+        <element name="Usuario" positionX="558" positionY="-63" width="126" height="163"/>
     </elements>
 </model>

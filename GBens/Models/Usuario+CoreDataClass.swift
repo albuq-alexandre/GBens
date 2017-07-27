@@ -2,7 +2,7 @@
 //  Usuario+CoreDataClass.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 27/06/17.
+//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
 //
 //
 

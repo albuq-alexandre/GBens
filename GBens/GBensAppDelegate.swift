@@ -144,6 +144,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         dep.codUor = Int64(999899)
         dep.nome = "Dependencia 999899"
         dep.prefixo = "9998"
+        dep.ultimasincroniz = (Date() as NSDate)
         dep.addToInventariante(myuser)
         
         for i in 0..<100 {
@@ -162,6 +163,9 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             
             loc.addToBem_place(c)
             dep.addToPlace_owner(loc)
+            if dep.endPrincipal == nil {
+                dep.endPrincipal = (loc)
+            }
             
             
             
@@ -169,11 +173,14 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
+        
+        
         let dep1 = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
         
         dep1.codUor = Int64(999897)
         dep1.nome = "Dependencia 999897"
         dep1.prefixo = "9997"
+        dep1.ultimasincroniz = (Date() as NSDate)
         dep1.addToInventariante(myuser)
         
         for i in 0..<100 {
