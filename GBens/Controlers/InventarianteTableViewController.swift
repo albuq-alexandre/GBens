@@ -18,6 +18,7 @@ class InventarianteTableViewController: UITableViewController {
     weak var usuario : Usuario?
     
     var from_user : String?
+    var myuser : Usuario?
     
    
     var prefixo_fetchedResultsController : NSFetchedResultsController<Dependencia>?
@@ -50,7 +51,9 @@ class InventarianteTableViewController: UITableViewController {
         return controller_pfx
     }
 
-
+    override func viewWillDisappear(_ animated: Bool) {
+        (UIApplication.shared.delegate as! GBensAppDelegate).saveContext()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +67,7 @@ class InventarianteTableViewController: UITableViewController {
         
         tableView.reloadData()
         
+       
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -85,49 +89,26 @@ class InventarianteTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        return [UITableViewRowAction(style: .default, title: "Delete", handler: { (action, ip) in
-            print("asdads");    // FIXME: - Consertar a ação de deletar o inventário
+        return [UITableViewRowAction(style: .default, title: "Excluir", handler: { (action, ip) in
+            self.pfx_fetchedResultsController().managedObjectContext.delete(self.pfx_fetchedResultsController().object(at: indexPath));
         })]
     }
 
-    
-   
-    
-    
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        
         return pfx_fetchedResultsController().sections![section].numberOfObjects
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell") as! AccountSwitcherTableViewCell
         
+        myuser = appUser(email: from_user!)
+        cell.setupCell(theuser: myuser!)
         
-        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
-        
-                    let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
-                    fetchRequest.fetchBatchSize = 10
-        
-                    fetchRequest.predicate = NSPredicate(format: "email == %@", self.from_user!) // FIXME: - Tratar se vazio.
-                    var fetchedUser : [Usuario]
-                    do {
-        
-                        fetchedUser = try managedContext.fetch(fetchRequest)
-        
-                    } catch {
-                        fatalError("Falha ao encontrar usuário: \(error)")
-        
-                    }
-        
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell") as! AccountSwitcherTableViewCell
-                    
-                    cell.setupCell(theuser: fetchedUser[0])
-                    
-                    return cell
+        return cell
         
         
         
@@ -159,47 +140,11 @@ class InventarianteTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dep = pfx_fetchedResultsController().object(at: indexPath)
-//        self.performSegue(withIdentifier: "toInventarioDetalhe", sender: nil)
         
     }
 
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-   
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -210,8 +155,8 @@ class InventarianteTableViewController: UITableViewController {
             switch identifier {
             case "toInventarioDetalhe":
                 (segue.destination as! InventarioViewController).dep = self.pfx_fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
-                
-        
+            case "segueToInventariante":
+                (segue.destination as! InventarianteViewController).theUser = appUser(email: (from_user)!)
             default:
                 break;
             }
@@ -250,12 +195,18 @@ extension InventarianteTableViewController : NSFetchedResultsControllerDelegate 
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         case .update:
             (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(inventariada: anObject as! Dependencia)
-        }
+           
+            tableView.reloadData()
+        
+        
+    }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-}
 
+
+
+}

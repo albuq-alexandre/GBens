@@ -2,7 +2,7 @@
 //  Dependencia+CoreDataProperties.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
+//  Created by Alexandre de Sousa Albuquerque on 29/07/17.
 //
 //
 
@@ -21,6 +21,7 @@ extension Dependencia {
     @NSManaged public var prefixo: String?
     @NSManaged public var ultimoInventario: NSDate?
     @NSManaged public var ultimasincroniz: NSDate?
+    @NSManaged public var inventarioConcluido: Bool
     @NSManaged public var bem_owner: NSOrderedSet?
     @NSManaged public var inventariante: NSSet?
     @NSManaged public var place_owner: NSSet?

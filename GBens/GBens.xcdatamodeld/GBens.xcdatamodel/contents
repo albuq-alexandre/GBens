@@ -27,6 +27,7 @@
     </entity>
     <entity name="Dependencia" representedClassName="Dependencia" syncable="YES">
         <attribute name="codUor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="inventarioConcluido" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prefixo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ultimasincroniz" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -42,7 +43,7 @@
         <attribute name="bairro" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cidade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="codLoc" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="complemento" optional="YES" syncable="YES"/>
+        <attribute name="complemento" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endereco" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sala" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="setor" optional="YES" attributeType="String" syncable="YES"/>
@@ -63,7 +64,7 @@
     </entity>
     <elements>
         <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
-        <element name="Dependencia" positionX="304" positionY="-81" width="128" height="193"/>
+        <element name="Dependencia" positionX="304" positionY="-81" width="128" height="208"/>
         <element name="Localizacao" positionX="79" positionY="-85" width="128" height="223"/>
         <element name="Usuario" positionX="558" positionY="-63" width="126" height="163"/>
     </elements>

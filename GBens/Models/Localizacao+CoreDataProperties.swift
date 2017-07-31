@@ -21,7 +21,7 @@ extension Localizacao {
     @NSManaged public var endereco: String?
     @NSManaged public var sala: String?
     @NSManaged public var setor: String?
-    @NSManaged public var complemento: NSObject?
+    @NSManaged public var complemento: String?
     @NSManaged public var bairro: String?
     @NSManaged public var cidade: String?
     @NSManaged public var uf: String?

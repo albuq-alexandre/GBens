@@ -2,7 +2,7 @@
 //  Dependencia+CoreDataClass.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
+//  Created by Alexandre de Sousa Albuquerque on 29/07/17.
 //
 //
 

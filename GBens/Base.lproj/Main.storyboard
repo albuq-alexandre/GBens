@@ -362,11 +362,11 @@
             </objects>
             <point key="canvasLocation" x="5167.5" y="-2015.4929577464789"/>
         </scene>
-        <!--Resumo-->
+        <!--Inventários Ativos-->
         <scene sceneID="zcz-4q-77P">
             <objects>
                 <tableViewController id="uz7-9R-AVt" customClass="InventarianteTableViewController" customModule="GBens" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oRJ-ZJ-JrG">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="1" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oRJ-ZJ-JrG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -394,7 +394,7 @@
                                                 <color key="titleColor" red="0.9999160171" green="1" blue="0.99987202880000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
-                                                <segue destination="GJK-ch-j7g" kind="show" id="sQq-wm-H3M"/>
+                                                <segue destination="GJK-ch-j7g" kind="show" identifier="segueToInventariante" id="sQq-wm-H3M"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -416,11 +416,11 @@
                                 <rect key="frame" x="0.0" y="191" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mtH-zn-D9F" id="fZu-Ze-Iwr">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q6i-cg-aTR">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="80"/>
+                                            <rect key="frame" x="15" y="0.0" width="290" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -439,7 +439,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Inventariante" image="ic_account_circle_18pt" id="8ym-dv-iOd"/>
-                    <navigationItem key="navigationItem" title="Resumo" id="sVq-eN-eie"/>
+                    <navigationItem key="navigationItem" title="Inventários Ativos" id="sVq-eN-eie"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6V-2N-F84" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -479,7 +479,7 @@
                                     <color key="titleColor" red="0.18810740109999999" green="0.2480875552" blue="0.62534654140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="lDm-ze-Bew" kind="unwind" unwindAction="unwindToMenuWithSegue:" id="dvC-9E-x8R"/>
+                                    <action selector="botaoSinc:" destination="giT-WT-SSh" eventType="touchUpInside" id="VPs-40-rMw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHl-ba-o38">
@@ -488,7 +488,7 @@
                                     <color key="titleColor" red="0.18810740109999999" green="0.2480875552" blue="0.62534654140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="lDm-ze-Bew" kind="unwind" unwindAction="unwindToMenuWithSegue:" id="U1h-oc-EYR"/>
+                                    <action selector="botaoConcluir:" destination="giT-WT-SSh" eventType="touchUpInside" id="JKx-Gf-Pei"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjQ-g9-Oo7">

@@ -39,17 +39,27 @@ class InventarioViewController: UIViewController {
         
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = Date()
-        
-        labelUltimoInventario.text = dateFormatter.string(from: date)
-        labelUltimaSincr.text = dateFormatter.string(from: date)
         
         
+        if dep?.ultimoInventario?.description != nil {
+            labelUltimoInventario.text = dateFormatter.string(from: (dep?.ultimoInventario as Date?)!)
+        } else {
+            labelUltimoInventario.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            labelUltimoInventario.text = "Sem inventarios concluídos"
+        }
         
-        labelMensagemStatus.textColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
-        labelMensagemStatus.text = "Sem Pendências"
+        
+        
+        if dep?.ultimasincroniz?.description != nil {
+            labelUltimaSincr.text = dateFormatter.string(from: (dep?.ultimasincroniz as Date?)!)
+        } else {
+            labelUltimoInventario.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            labelUltimoInventario.text = "Nunca"
+        }
+        
+        
     
-        botaoConcluir.isEnabled = false
+        
         
     }
 
@@ -58,7 +68,24 @@ class InventarioViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func botaoSinc(_ sender: Any) {
+   
+        
+        dep?.ultimasincroniz = Date() as NSDate
+        labelMensagemStatus.textColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+        labelMensagemStatus.text = "Sem Pendências"
+    
+    
+    
+    }
 
+    @IBAction func botaoConcluir(_ sender: Any) {
+        
+        dep?.inventarioConcluido = true
+        dep?.ultimoInventario = Date() as NSDate
+        
+        
+    }
     /*
     // MARK:  - Navigation
 

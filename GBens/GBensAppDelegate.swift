@@ -20,11 +20,35 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        
-        createUser()
+        var v_pfx : Int64
+        
         FirebaseApp.configure()
         
-       
+        let managedContext = persistentContainer.viewContext
         
+        let fetchRequest : NSFetchRequest<Dependencia> = Dependencia.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "prefixo", ascending: false)]
+        fetchRequest.fetchBatchSize = 10
+        
+        var pfx : [Dependencia]
+        do {
+            
+            pfx = try managedContext.fetch(fetchRequest)
+            
+        } catch {
+            fatalError("Falha ao encontrar usuário: \(error)")
+            
+        }
+        
+        if pfx.count == 0 {
+            v_pfx = 1001
+        } else {
+            v_pfx = (Int64(pfx[0].prefixo!))! + 1
+        }
+        
+        if pfx.count < 3 {
+        createDummyData(prefixo: v_pfx, myuser: createUser())
+        }
         
         
         return true
@@ -129,7 +153,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Dummy test CoreData
         
         
-    func createUser() {
+    func createUser() -> Usuario {
         
         let myuser = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: persistentContainer.viewContext) as! Usuario
         
@@ -137,78 +161,64 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         myuser.email = "teste@teste.com"
         myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
         
-   
+        return myuser
+    }
+    
+    func createDummyData(prefixo : Int64, myuser: Usuario) {
         
         let dep = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
         
-        dep.codUor = Int64(999899)
-        dep.nome = "Dependencia 999899"
-        dep.prefixo = "9998"
+        
+        dep.codUor = Int64(990000 + prefixo)
+        dep.nome = "Dependencia \(prefixo)"
+        dep.prefixo = "\(prefixo)"
         dep.ultimasincroniz = (Date() as NSDate)
         dep.addToInventariante(myuser)
         
+        
         for i in 0..<100 {
-            let c = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
-            c.codBem = "0000000000\(i)"
-            c.nome = "Bem nr. 000000000\(i)"
+            let b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
+            b.codBem = "0000000000\(i)"
+            b.nome = "Bem nr. 000000000\(i)"
+            b.pbms = "9915050905008"
+            b.pbms = "99"
+            b.pbms2 = "15"
+            b.pbms3 = "050"
+            b.pbms4 = "905008"
+            b.nome_pbms = "UltraBook Executivo"
+            b.categoria = "04"
+            b.subcategoria = "0009"
+            b.estadoConservacao = "Otimo"
+            b.dt_aquisicao = Date() as NSDate // "10/04/2016")
+            b.parcelas = Int16(63)
+            b.dt_inventario = Date() as NSDate // "18/11/2016")
+            b.nr_serie = "0000000000\(i)"
+            b.obs = "TestDummyData"
+            b.nome_fabricante = "Lenovo"
             
-            
-            dep.addToBem_owner(c)
+            dep.addToBem_owner(b)
             
             let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: persistentContainer.viewContext) as! Localizacao
             
             loc.andar = Int16(i * 3)
-            loc.codLoc = Int64(i)
-            loc.endereco = "Endereco \(i * 2)"
+            loc.codLoc = prefixo * 1000000 + Int64(i)
+            loc.endereco = "Endereco \(i)"
+            loc.bairro = "Bairro \(i)"
+            loc.cidade = "Cidade \(i)"
+            loc.complemento = "complemento \(i)"
+            loc.sala = "sala \(i)"
+            loc.setor = "setor \(i)"
+            loc.uf = "DF"
             
-            loc.addToBem_place(c)
+            loc.addToBem_place(b)
             dep.addToPlace_owner(loc)
             if dep.endPrincipal == nil {
                 dep.endPrincipal = (loc)
             }
             
-            
-            
-            //c.addObserver(self, forKeyPath: "nome", options: .new, context: nil)
-            
         }
-        
-        
-        
-        let dep1 = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
-        
-        dep1.codUor = Int64(999897)
-        dep1.nome = "Dependencia 999897"
-        dep1.prefixo = "9997"
-        dep1.ultimasincroniz = (Date() as NSDate)
-        dep1.addToInventariante(myuser)
-        
-        for i in 0..<100 {
-            let c = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
-            c.codBem = "1000000000\(i)"
-            c.nome = "Bem nr. 100000000\(i)"
-            
-            
-            dep1.addToBem_owner(c)
-            
-            let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: persistentContainer.viewContext) as! Localizacao
-            
-            loc.andar = Int16(i * 3)
-            loc.codLoc = Int64(i)
-            loc.endereco = "Endereco \(i * 2)"
-            
-            loc.addToBem_place(c)
-            dep1.addToPlace_owner(loc)
-        }
-        
-        
-        
         saveContext ()
     }
-
-    
-    
-//           }
 
 }
 

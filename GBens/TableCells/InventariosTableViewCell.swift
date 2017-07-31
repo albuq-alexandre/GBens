@@ -29,7 +29,10 @@ class InventariosTableViewCell: UITableViewCell {
         
         self.textLabel?.text = inventariada.prefixo
         //        self.imageView?.image = UIApplicationShortcutIcon
-    
+        if inventariada.inventarioConcluido {
+            self.accessoryType = UITableViewCellAccessoryType.checkmark
+            
+        }
     
     }
     

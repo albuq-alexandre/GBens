@@ -24,7 +24,7 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var cidadeLabel: UILabel!
     @IBOutlet weak var ufLabel: UILabel!
     
-    
+    var theUser: Usuario?
     
     
     
@@ -69,6 +69,7 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
         
         AccountImage.image = choosenImage
         AccountImage.contentMode = .scaleAspectFill
+        theUser?.foto = UIImageJPEGRepresentation(choosenImage, 1)! as NSData
         
         dismiss(animated: true, completion: nil)
         
@@ -86,6 +87,20 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
         
         AccountImage.asAvatar()
         AccountImage.layer.borderWidth = 3.0
+        
+        if theUser?.foto != nil {
+            AccountImage.image = UIImage(data: (theUser?.foto)! as Data)
+        }
+        
+        nomeGuerra.text = theUser?.nome?.components(separatedBy: " ")[0]
+        codUserLabel.text = theUser?.email
+        nomeCompletoLabel.text = theUser?.nome
+//        depLocalizacaoLabel.text = (theUser?.dep_localizacao?.value(forKey: "prefixo") as! String) + " - " + (theUser?.dep_localizacao?.value(forKey: "nome") as! String)
+//        endDependenciaLabel.text = (theUser?.dep_localizacao?.endPrincipal.value(forKey: "endereco") as! String)
+//        complemEndLabel: UIL
+//        bairroLabel: UILabel
+//        cidadeLabel: UILabel
+//        ufLabel: UILabel!
         
         
         // Do any additional setup after loading the view.
