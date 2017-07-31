@@ -174,6 +174,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         dep.prefixo = "\(prefixo)"
         dep.ultimasincroniz = (Date() as NSDate)
         dep.addToInventariante(myuser)
+        myuser.dep_localizacao = (dep)
         
         
         for i in 0..<100 {

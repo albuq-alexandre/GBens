@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		382F780D1F2F4C40002B6821 /* Usuario+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382F780B1F2F4C40002B6821 /* Usuario+CoreDataClass.swift */; };
+		382F780E1F2F4C40002B6821 /* Usuario+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382F780C1F2F4C40002B6821 /* Usuario+CoreDataProperties.swift */; };
 		385811A91EFB1E28007CD2E7 /* GBens.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 385811A71EFB1E28007CD2E7 /* GBens.xcdatamodeld */; };
 		385811AB1EFB1E28007CD2E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385811AA1EFB1E28007CD2E7 /* Assets.xcassets */; };
 		385811B91EFB1E29007CD2E7 /* GBensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811B81EFB1E29007CD2E7 /* GBensTests.swift */; };
@@ -31,8 +33,6 @@
 		385812161EFF1525007CD2E7 /* BensBackupFirebase.json in Resources */ = {isa = PBXBuildFile; fileRef = 385812151EFF1525007CD2E7 /* BensBackupFirebase.json */; };
 		38A934FA1F29807700D97AC5 /* Localizacao+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F21F29807700D97AC5 /* Localizacao+CoreDataClass.swift */; };
 		38A934FB1F29807700D97AC5 /* Localizacao+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F31F29807700D97AC5 /* Localizacao+CoreDataProperties.swift */; };
-		38A934FC1F29807700D97AC5 /* Usuario+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F41F29807700D97AC5 /* Usuario+CoreDataClass.swift */; };
-		38A934FD1F29807700D97AC5 /* Usuario+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F51F29807700D97AC5 /* Usuario+CoreDataProperties.swift */; };
 		38A935001F29807700D97AC5 /* Bem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F81F29807700D97AC5 /* Bem+CoreDataClass.swift */; };
 		38A935011F29807700D97AC5 /* Bem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A934F91F29807700D97AC5 /* Bem+CoreDataProperties.swift */; };
 		38A935041F2D07FD00D97AC5 /* Dependencia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A935021F2D07FD00D97AC5 /* Dependencia+CoreDataClass.swift */; };
@@ -63,6 +63,8 @@
 		1C410767FBC664063653EB12 /* Pods_GBens.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBens.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E17B11256C243BE856DD042 /* Pods-GBensUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBensUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GBensUITests/Pods-GBensUITests.release.xcconfig"; sourceTree = "<group>"; };
 		24E55D41E66B026A008DC24C /* Pods-GBensTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBensTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GBensTests/Pods-GBensTests.release.xcconfig"; sourceTree = "<group>"; };
+		382F780B1F2F4C40002B6821 /* Usuario+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Usuario+CoreDataClass.swift"; sourceTree = "<group>"; };
+		382F780C1F2F4C40002B6821 /* Usuario+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Usuario+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3858119D1EFB1E28007CD2E7 /* GBens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385811A81EFB1E28007CD2E7 /* GBens.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GBens.xcdatamodel; sourceTree = "<group>"; };
 		385811AA1EFB1E28007CD2E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,8 +95,6 @@
 		385812151EFF1525007CD2E7 /* BensBackupFirebase.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BensBackupFirebase.json; sourceTree = "<group>"; };
 		38A934F21F29807700D97AC5 /* Localizacao+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizacao+CoreDataClass.swift"; sourceTree = "<group>"; };
 		38A934F31F29807700D97AC5 /* Localizacao+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizacao+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		38A934F41F29807700D97AC5 /* Usuario+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Usuario+CoreDataClass.swift"; sourceTree = "<group>"; };
-		38A934F51F29807700D97AC5 /* Usuario+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Usuario+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		38A934F81F29807700D97AC5 /* Bem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		38A934F91F29807700D97AC5 /* Bem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		38A935021F2D07FD00D97AC5 /* Dependencia+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dependencia+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -224,12 +224,12 @@
 		385811E51EFB201A007CD2E7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				382F780B1F2F4C40002B6821 /* Usuario+CoreDataClass.swift */,
+				382F780C1F2F4C40002B6821 /* Usuario+CoreDataProperties.swift */,
 				38A935021F2D07FD00D97AC5 /* Dependencia+CoreDataClass.swift */,
 				38A935031F2D07FD00D97AC5 /* Dependencia+CoreDataProperties.swift */,
 				38A934F21F29807700D97AC5 /* Localizacao+CoreDataClass.swift */,
 				38A934F31F29807700D97AC5 /* Localizacao+CoreDataProperties.swift */,
-				38A934F41F29807700D97AC5 /* Usuario+CoreDataClass.swift */,
-				38A934F51F29807700D97AC5 /* Usuario+CoreDataProperties.swift */,
 				38A934F81F29807700D97AC5 /* Bem+CoreDataClass.swift */,
 				38A934F91F29807700D97AC5 /* Bem+CoreDataProperties.swift */,
 			);
@@ -577,13 +577,14 @@
 				385811FB1EFB2028007CD2E7 /* bemTableViewCell.swift in Sources */,
 				385811E01EFB2009007CD2E7 /* InventarioViewController.swift in Sources */,
 				385811E31EFB2009007CD2E7 /* ScannerViewController.swift in Sources */,
+				382F780E1F2F4C40002B6821 /* Usuario+CoreDataProperties.swift in Sources */,
 				385811E41EFB2009007CD2E7 /* Utilitarios.swift in Sources */,
 				38A934FA1F29807700D97AC5 /* Localizacao+CoreDataClass.swift in Sources */,
 				385811DF1EFB2009007CD2E7 /* InventarianteViewController.swift in Sources */,
-				38A934FD1F29807700D97AC5 /* Usuario+CoreDataProperties.swift in Sources */,
 				385811A91EFB1E28007CD2E7 /* GBens.xcdatamodeld in Sources */,
 				3858120F1EFB3333007CD2E7 /* GBensAppDelegate.swift in Sources */,
 				38A935001F29807700D97AC5 /* Bem+CoreDataClass.swift in Sources */,
+				382F780D1F2F4C40002B6821 /* Usuario+CoreDataClass.swift in Sources */,
 				385811FA1EFB2028007CD2E7 /* AccountSwitcherTableViewCell.swift in Sources */,
 				385811FC1EFB2028007CD2E7 /* InventariosTableViewCell.swift in Sources */,
 				38A934FB1F29807700D97AC5 /* Localizacao+CoreDataProperties.swift in Sources */,
@@ -591,7 +592,6 @@
 				385811DD1EFB2009007CD2E7 /* DBCoreDataController.swift in Sources */,
 				38A935011F29807700D97AC5 /* Bem+CoreDataProperties.swift in Sources */,
 				385811E11EFB2009007CD2E7 /* ListaBensTableViewController.swift in Sources */,
-				38A934FC1F29807700D97AC5 /* Usuario+CoreDataClass.swift in Sources */,
 				385811DE1EFB2009007CD2E7 /* InventarianteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

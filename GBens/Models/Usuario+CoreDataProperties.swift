@@ -2,7 +2,7 @@
 //  Usuario+CoreDataProperties.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
+//  Created by Alexandre de Sousa Albuquerque on 31/07/17.
 //
 //
 
@@ -23,7 +23,7 @@ extension Usuario {
     @NSManaged public var password: String?
     @NSManaged public var bem_scanned: NSSet?
     @NSManaged public var dep_inventariada: NSSet?
-    @NSManaged public var dep_localizacao: NSSet?
+    @NSManaged public var dep_localizacao: Dependencia?
 
 }
 
@@ -58,22 +58,5 @@ extension Usuario {
 
     @objc(removeDep_inventariada:)
     @NSManaged public func removeFromDep_inventariada(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for dep_localizacao
-extension Usuario {
-
-    @objc(addDep_localizacaoObject:)
-    @NSManaged public func addToDep_localizacao(_ value: Dependencia)
-
-    @objc(removeDep_localizacaoObject:)
-    @NSManaged public func removeFromDep_localizacao(_ value: Dependencia)
-
-    @objc(addDep_localizacao:)
-    @NSManaged public func addToDep_localizacao(_ values: NSSet)
-
-    @objc(removeDep_localizacao:)
-    @NSManaged public func removeFromDep_localizacao(_ values: NSSet)
 
 }

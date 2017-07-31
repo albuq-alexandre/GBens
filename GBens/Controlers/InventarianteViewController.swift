@@ -83,7 +83,11 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let theDep = theUser?.dep_localizacao
+        let thePlace = theDep?.endPrincipal
+        
+        
         
         AccountImage.asAvatar()
         AccountImage.layer.borderWidth = 3.0
@@ -95,12 +99,12 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
         nomeGuerra.text = theUser?.nome?.components(separatedBy: " ")[0]
         codUserLabel.text = theUser?.email
         nomeCompletoLabel.text = theUser?.nome
-//        depLocalizacaoLabel.text = (theUser?.dep_localizacao?.value(forKey: "prefixo") as! String) + " - " + (theUser?.dep_localizacao?.value(forKey: "nome") as! String)
-//        endDependenciaLabel.text = (theUser?.dep_localizacao?.endPrincipal.value(forKey: "endereco") as! String)
-//        complemEndLabel: UIL
-//        bairroLabel: UILabel
-//        cidadeLabel: UILabel
-//        ufLabel: UILabel!
+        depLocalizacaoLabel.text = "\(theDep?.prefixo ?? "")  - \(theDep?.nome ?? "")"
+        endDependenciaLabel.text = thePlace?.endereco
+        complemEndLabel.text = thePlace?.complemento
+        bairroLabel.text = thePlace?.bairro
+        cidadeLabel.text = thePlace?.cidade
+        ufLabel.text = thePlace?.uf
         
         
         // Do any additional setup after loading the view.

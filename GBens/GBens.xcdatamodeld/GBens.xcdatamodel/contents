@@ -60,12 +60,12 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="bem_scanned" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bem" inverseName="user_inventariante" inverseEntity="Bem" syncable="YES"/>
         <relationship name="dep_inventariada" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="inventariante" inverseEntity="Dependencia" syncable="YES"/>
-        <relationship name="dep_localizacao" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="usuario_local" inverseEntity="Dependencia" syncable="YES"/>
+        <relationship name="dep_localizacao" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="usuario_local" inverseEntity="Dependencia" syncable="YES"/>
     </entity>
     <elements>
         <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
         <element name="Dependencia" positionX="304" positionY="-81" width="128" height="208"/>
         <element name="Localizacao" positionX="79" positionY="-85" width="128" height="223"/>
-        <element name="Usuario" positionX="558" positionY="-63" width="126" height="163"/>
+        <element name="Usuario" positionX="558" positionY="-63" width="126" height="165"/>
     </elements>
 </model>
