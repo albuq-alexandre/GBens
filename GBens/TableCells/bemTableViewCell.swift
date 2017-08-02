@@ -10,6 +10,13 @@ import UIKit
 
 class bemTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var labelCodBem: UILabel!
+    @IBOutlet weak var labelPBMS: UILabel!
+    @IBOutlet weak var labelNome: UILabel!
+    @IBOutlet weak var imageBem: UIImageView!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +28,20 @@ class bemTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func setupCell(_bem:Bem){
+        
+        labelNome.text = _bem.nome
+        labelPBMS.text = _bem.pbms
+        labelCodBem.text = _bem.codBem
+        if _bem.scannedImage != nil {
+            imageBem.image = UIImage(data: _bem.scannedImage! as Data)
+        } else {
+            imageBem.image = #imageLiteral(resourceName: "BemPhoto")
+        }
+
+        
+        
+    }
+    
+    
 }

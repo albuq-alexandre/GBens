@@ -2,7 +2,7 @@
 //  Bem+CoreDataProperties.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 26/07/17.
+//  Created by Alexandre de Sousa Albuquerque on 31/07/17.
 //
 //
 

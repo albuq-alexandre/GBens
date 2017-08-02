@@ -55,6 +55,10 @@ class InventarianteTableViewController: UITableViewController {
         (UIApplication.shared.delegate as! GBensAppDelegate).saveContext()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,6 +70,7 @@ class InventarianteTableViewController: UITableViewController {
         
         
         tableView.reloadData()
+        
         
        
         // Uncomment the following line to preserve selection between presentations

@@ -30,13 +30,15 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "prefixo", ascending: false)]
         fetchRequest.fetchBatchSize = 10
         
+        
+        
         var pfx : [Dependencia]
         do {
             
             pfx = try managedContext.fetch(fetchRequest)
             
         } catch {
-            fatalError("Falha ao encontrar usuário: \(error)")
+            fatalError("Falha ao encontrar Dependências para Inventário: \(error)")
             
         }
         
@@ -155,11 +157,34 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         
     func createUser() -> Usuario {
         
-        let myuser = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: persistentContainer.viewContext) as! Usuario
+        var myuser : Usuario
         
-        myuser.codUser = "teste"
-        myuser.email = "teste@teste.com"
-        myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
+        
+        let managedContext = persistentContainer.viewContext
+        
+        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "email", ascending: false)]
+        fetchRequest.fetchBatchSize = 10
+        
+        
+        var usr : [Usuario]
+        do {
+            
+            usr = try managedContext.fetch(fetchRequest)
+            
+        } catch {
+            fatalError("Falha ao encontrar usuário: \(error)")
+            
+        }
+        
+        if usr.count == 0 {
+            myuser = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: persistentContainer.viewContext) as! Usuario
+            myuser.codUser = "teste"
+            myuser.email = "teste@teste.com"
+            myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
+        } else {
+            myuser = usr[0]
+        }
         
         return myuser
     }
@@ -174,7 +199,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         dep.prefixo = "\(prefixo)"
         dep.ultimasincroniz = (Date() as NSDate)
         dep.addToInventariante(myuser)
-        myuser.dep_localizacao = (dep)
+        myuser.setValue( dep, forKey: "dep_localizacao")
         
         
         for i in 0..<100 {
@@ -214,7 +239,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             loc.addToBem_place(b)
             dep.addToPlace_owner(loc)
             if dep.endPrincipal == nil {
-                dep.endPrincipal = (loc)
+                dep.setValue(loc, forKey: "endPrincipal")
             }
             
         }
