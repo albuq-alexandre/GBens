@@ -35,10 +35,21 @@ class bemTableViewCell: UITableViewCell {
         labelCodBem.text = _bem.codBem
         if _bem.scannedImage != nil {
             imageBem.image = UIImage(data: _bem.scannedImage! as Data)
+            
         } else {
             imageBem.image = #imageLiteral(resourceName: "BemPhoto")
         }
 
+        imageBem.asAvatar()
+        
+        if _bem.scan_date != nil {
+            self.accessoryType = UITableViewCellAccessoryType.checkmark
+            
+        } else {
+            self.accessoryType = UITableViewCellAccessoryType.none
+            
+        }
+        
         
         
     }

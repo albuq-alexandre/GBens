@@ -15,30 +15,34 @@ class BemViewController: UIViewController {
     @IBOutlet weak var labelPBMS: UILabel!
     @IBOutlet weak var labelNome: UILabel!
     @IBOutlet weak var labelDTScan: UILabel!
-  //  @IBOutlet weak var pickerEstadoConservação: UIPickerView!
+    @IBOutlet weak var pickerEstadoConservacao: UIPickerView!
     @IBOutlet weak var labelPrefixoNomeDepOwner: UILabel!
     @IBOutlet weak var labelEnderecoLocal: UILabel!
     @IBOutlet weak var labelAndarLocal: UILabel!
     @IBOutlet weak var labelSalaLocal: UILabel!
     @IBOutlet weak var labelSetorLocal: UILabel!
     
-   // @IBOutlet weak var pickerLocal: UIPickerView!
+    @IBOutlet weak var pickerLocal: UIPickerView!
     
     var _bem : Bem?
     var _dep : Dependencia?
     var _loc : Localizacao?
     
+    var est_conserv = ["Ótimo", "Bom", "Danificado", "Obsoleto", "Inservível"]
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let _dep = _bem?.dep_owner
-        let _loc = _bem?.place
+//        let _dep = _bem?.dep_owner
+//        let _loc = _bem?.place
         
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if _bem?.scannedImage != nil {
-            imageBem.image = UIImage(data: _bem?.scannedImage! as! Data)
+            imageBem.image = UIImage(data: (_bem?.scannedImage! as Data?)!)
         } else {
             imageBem.image = #imageLiteral(resourceName: "BemPhoto")
         }
@@ -54,6 +58,7 @@ class BemViewController: UIViewController {
             labelDTScan.text = "Nunca"
         }
         
+        pickerEstadoConservacao.selectRow(est_conserv.index(of: (_bem?.estadoConservacao)!)!, inComponent: 0, animated: true)
         
         labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
         labelEnderecoLocal.text = _loc?.endereco
@@ -61,12 +66,14 @@ class BemViewController: UIViewController {
         labelSalaLocal.text = _loc?.sala
         labelSetorLocal.text = _loc?.setor
         
+        pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
         
         
         
         // Do any additional setup after loading the view.
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -80,7 +87,82 @@ class BemViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if let identifier = segue.identifier{
+            switch identifier {
+            case "unwindToLista":
+                
+            default:
+                break;
+            }
+        }
+
+        
     }
     */
+}
 
+
+extension BemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        var titulo:String?
+        
+        switch pickerView {
+        case pickerEstadoConservacao:
+            titulo = est_conserv[row]
+        case pickerLocal:
+            titulo = (_dep?.place_owner?.allObjects as! [Localizacao])[row].setor
+        default:
+            titulo = ""
+        }
+        
+        return titulo
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        var nr: Int = 1
+        switch pickerView {
+        case pickerEstadoConservacao:
+            nr = est_conserv.count
+        case pickerLocal:
+            nr = (_dep?.place_owner?.count)!
+        default:
+            nr = 1
+        }
+        return nr
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        switch pickerView {
+        case pickerEstadoConservacao:
+            _bem?.estadoConservacao = est_conserv[row]
+        case pickerLocal:
+            _bem?.place = (_dep?.place_owner?.allObjects as! [Localizacao])[row]
+            _loc = (_dep?.place_owner?.allObjects as! [Localizacao])[row]
+            labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
+            labelEnderecoLocal.text = _loc?.endereco
+            labelAndarLocal.text = "\(_loc?.andar ?? 0) andar"
+            labelSalaLocal.text = _loc?.sala
+            labelSetorLocal.text = _loc?.setor
+
+            
+            
+        default: break
+            
+        }
+
+        
+        
+        
+    }
+    
 }

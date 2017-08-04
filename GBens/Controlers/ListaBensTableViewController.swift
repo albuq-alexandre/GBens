@@ -11,7 +11,11 @@ import CoreData
 
 class ListaBensTableViewController: UITableViewController {
 
-    @IBAction func unwindToLista(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToLista(segue: UIStoryboardSegue) {
+        _bem?.scan_date = Date() as NSDate
+        (segue.destination as! ListaBensTableViewController).tableView.reloadData()
+    
+    }
     
     weak var _bem : Bem?
     
@@ -142,6 +146,10 @@ class ListaBensTableViewController: UITableViewController {
             switch identifier {
             case "DetalhesBemSegue":
                 (segue.destination as! BemViewController)._bem = self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
+                (segue.destination as! BemViewController)._dep = (self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!) as Bem).dep_owner
+                (segue.destination as! BemViewController)._loc = (self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!) as Bem).place
+                
+                
             default:
                 break;
             }
@@ -194,6 +202,7 @@ extension ListaBensTableViewController : NSFetchedResultsControllerDelegate {
             if let cell = (tableView.cellForRow(at: indexPath!) as? bemTableViewCell) {
                 cell.setupCell(_bem: anObject as! Bem)
             }
+            tableView.reloadData()
         }
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Bem" representedClassName="Bem" syncable="YES">
         <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="codBem" optional="YES" attributeType="String" syncable="YES"/>
@@ -65,7 +65,7 @@
     <elements>
         <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
         <element name="Dependencia" positionX="304" positionY="-81" width="128" height="208"/>
-        <element name="Localizacao" positionX="79" positionY="-85" width="128" height="223"/>
+        <element name="Localizacao" positionX="79" positionY="-85" width="128" height="225"/>
         <element name="Usuario" positionX="558" positionY="-63" width="126" height="165"/>
     </elements>
 </model>
