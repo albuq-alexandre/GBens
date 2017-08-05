@@ -17,6 +17,28 @@ class ListaBensTableViewController: UITableViewController {
     
     }
     
+    @IBOutlet weak var controleFiltro: UISegmentedControl!
+    
+    @IBAction func acionaFiltro(_ sender: UISegmentedControl) {
+        
+        let fetchRequest = fetchedResultsController().fetchRequest
+        switch controleFiltro.selectedSegmentIndex
+        {
+        case 0:
+            fetchRequest.predicate = nil
+            
+        case 1:
+            fetchRequest.predicate = NSPredicate(format: "scan_date == nil")
+                    default:
+            break; 
+        }
+        try! fetchedResultsController().performFetch()
+        tableView.reloadData()
+
+        
+    }
+    
+    
     weak var _bem : Bem?
     
     var _fetchedResultsControler : NSFetchedResultsController<Bem>?
@@ -27,15 +49,16 @@ class ListaBensTableViewController: UITableViewController {
         }
         
         let fetchRequest : NSFetchRequest<Bem> = Bem.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "codBem", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dep_owner.prefixo", ascending: true), NSSortDescriptor(key: "codBem", ascending: true , selector: #selector(NSString.localizedStandardCompare(_:)))]
         fetchRequest.fetchBatchSize = 20
+        
         
         
         let controller = NSFetchedResultsController<Bem>(
             fetchRequest: fetchRequest,
             managedObjectContext: (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext,
             sectionNameKeyPath: "dep_owner.prefixo",
-            cacheName: "tabelaBens")
+            cacheName: nil)
         
         
         controller.delegate = self
@@ -65,6 +88,21 @@ class ListaBensTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return "Prefixo: " + (fetchedResultsController().object(at: IndexPath(row: 0, section: section)).dep_owner?.prefixo)!
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return fetchedResultsController().sections!.map({ (s) -> String in
+            return s.name
+        })
+    }
+
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return index
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

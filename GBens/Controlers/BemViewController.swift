@@ -21,12 +21,13 @@ class BemViewController: UIViewController {
     @IBOutlet weak var labelAndarLocal: UILabel!
     @IBOutlet weak var labelSalaLocal: UILabel!
     @IBOutlet weak var labelSetorLocal: UILabel!
-    
+    @IBOutlet weak var transfereParaMinhaDep: UIButton!
     @IBOutlet weak var pickerLocal: UIPickerView!
     
     var _bem : Bem?
     var _dep : Dependencia?
     var _loc : Localizacao?
+    var usrLogado : Usuario? = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado)
     
     var est_conserv = ["Ótimo", "Bom", "Danificado", "Obsoleto", "Inservível"]
     
@@ -35,8 +36,22 @@ class BemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let _dep = _bem?.dep_owner
-//        let _loc = _bem?.place
+        if usrLogado == nil {
+            usrLogado = appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
+        }
+        
+        if _loc == nil {
+            let t_loc: [Localizacao] = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao?.place_owner?.allObjects)! as! [Localizacao]
+            _loc = t_loc[0]
+        }
+        
+        
+        if usrLogado?.dep_localizacao != _dep {
+            transfereParaMinhaDep.isEnabled = true
+        } else {
+            transfereParaMinhaDep.isEnabled = false
+        }
+        
         
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -57,8 +72,10 @@ class BemViewController: UIViewController {
             labelDTScan.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             labelDTScan.text = "Nunca"
         }
+        if _bem?.estadoConservacao != nil {
+         pickerEstadoConservacao.selectRow(est_conserv.index(of: (_bem?.estadoConservacao)!)!, inComponent: 0, animated: true)
+        }
         
-        pickerEstadoConservacao.selectRow(est_conserv.index(of: (_bem?.estadoConservacao)!)!, inComponent: 0, animated: true)
         
         labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
         labelEnderecoLocal.text = _loc?.endereco
@@ -66,13 +83,20 @@ class BemViewController: UIViewController {
         labelSalaLocal.text = _loc?.sala
         labelSetorLocal.text = _loc?.setor
         
+       
         pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
-        
-        
+       
         
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func transfereParaMinhaDep(_ sender: Any) {
+        _bem?.dep_owner = (UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao
+        _dep = (UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao
+        let t_loc: [Localizacao] = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao?.place_owner?.allObjects)! as! [Localizacao]
+        _loc = t_loc[0]
+        pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

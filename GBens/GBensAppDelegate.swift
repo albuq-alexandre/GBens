@@ -16,6 +16,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    var usuariologado: Usuario?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -43,12 +44,12 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if pfx.count == 0 {
-            v_pfx = 1001
+            v_pfx = 9081
         } else {
             v_pfx = (Int64(pfx[0].prefixo!))! + 1
         }
         
-        if pfx.count < 3 {
+        if pfx.count < 10 {
         createDummyData(prefixo: v_pfx, myuser: createUser())
         }
         
@@ -202,7 +203,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         myuser.setValue( dep, forKey: "dep_localizacao")
         
         
-        for i in 0..<100 {
+        for i in 0..<10 {
             let b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
             b.codBem = "0000000000\(i)"
             b.nome = "Bem nr. 000000000\(i)"
