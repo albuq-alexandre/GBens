@@ -41,6 +41,10 @@
 		<string>MKDirectionsModeSubway</string>
 		<string>MKDirectionsModeTaxi</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>GBens precisa usar sua Câmera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>GBens precisa usar sua Fototeca</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -54,6 +58,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -62,9 +67,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>GBens precisa usar sua Câmera</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>GBens precisa usar sua Fototeca</string>
 </dict>
 </plist>

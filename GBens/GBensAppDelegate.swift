@@ -21,7 +21,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        
-        var v_pfx : Int64
+//        var v_pfx : Int64
         
         FirebaseApp.configure()
         
@@ -43,14 +43,14 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
-        if pfx.count == 0 {
-            v_pfx = 9081
-        } else {
-            v_pfx = (Int64(pfx[0].prefixo!))! + 1
-        }
+//        if pfx.count == 0 {
+//            v_pfx = 9081
+//        } else {
+//            v_pfx = (Int64(pfx[0].prefixo!))! + 1
+//        }
         
         if pfx.count < 10 {
-        createDummyData(prefixo: v_pfx, myuser: createUser())
+            createDummyData(depd: pfx.first, myuser: createUser())
         }
         
         
@@ -184,13 +184,22 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             myuser.email = "teste@teste.com"
             myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
         } else {
-            myuser = usr[0]
+            myuser = usr.first!
         }
         
         return myuser
     }
     
-    func createDummyData(prefixo : Int64, myuser: Usuario) {
+    func createDummyData(depd : Dependencia?, myuser: Usuario) {
+        
+        var prefixo : Int64 = Int64(9081)
+        var finalbem: Int = 0
+        
+        
+        if depd != nil {
+            prefixo = Int64((depd?.prefixo!)!)! + 1
+            finalbem = Int(((prefixo - 9082 ) * 10) + Int64((depd?.bem_owner?.count)!))
+        }
         
         let dep = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: persistentContainer.viewContext) as! Dependencia
         
@@ -205,8 +214,8 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         
         for i in 0..<10 {
             let b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
-            b.codBem = "0000000000\(i)"
-            b.nome = "Bem nr. 000000000\(i)"
+            b.codBem = "0000000000\(i + finalbem)"
+            b.nome = "Bem nr. 000000000\(i + finalbem)"
             b.pbms = "99.15.050.905008"
             b.pbms1 = "99"
             b.pbms2 = "15"
@@ -219,7 +228,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             b.dt_aquisicao = Date() as NSDate // "10/04/2016")
             b.parcelas = Int16(63)
             b.dt_inventario = Date() as NSDate // "18/11/2016")
-            b.nr_serie = "0000000000\(i)"
+            b.nr_serie = "0000000000\(i + finalbem)"
             b.obs = "TestDummyData"
             b.nome_fabricante = "Lenovo"
             
@@ -228,7 +237,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: persistentContainer.viewContext) as! Localizacao
             
             loc.andar = Int16(i * 3)
-            loc.codLoc = prefixo * 1000000 + Int64(i)
+            loc.codLoc = prefixo * 1000000 + Int64(i + finalbem)
             loc.endereco = "Endereco \(i)"
             loc.bairro = "Bairro \(i)"
             loc.cidade = "Cidade \(i)"

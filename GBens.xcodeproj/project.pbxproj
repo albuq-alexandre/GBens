@@ -363,6 +363,7 @@
 				TargetAttributes = {
 					3858119C1EFB1E28007CD2E7 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = BG6UTFK947;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -753,6 +754,7 @@
 			baseConfigurationReference = C21477F20CDA423BBB7995D0 /* Pods-GBens.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BG6UTFK947;
 				INFOPLIST_FILE = GBens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.iesb.16031088056.GBens;
@@ -766,6 +768,7 @@
 			baseConfigurationReference = DF22C904961717983B8C1C46 /* Pods-GBens.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BG6UTFK947;
 				INFOPLIST_FILE = GBens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.iesb.16031088056.GBens;

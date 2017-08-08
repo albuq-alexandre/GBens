@@ -199,12 +199,29 @@ extension ListaBensTableViewController : UISearchBarDelegate {
         let fetchRequest = fetchedResultsController().fetchRequest
         if (searchText == "") {
             fetchRequest.predicate = nil
+            
         } else {
             fetchRequest.predicate = NSPredicate(format: "codBem contains %@", searchText, ["","",""])
             
+            
         }
         try! fetchedResultsController().performFetch()
+        
         tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+        
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(false)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(false)
     }
 }
 
