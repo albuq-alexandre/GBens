@@ -23,6 +23,7 @@ class BemViewController: UIViewController {
     @IBOutlet weak var labelSetorLocal: UILabel!
     @IBOutlet weak var transfereParaMinhaDep: UIButton!
     @IBOutlet weak var pickerLocal: UIPickerView!
+    @IBOutlet weak var buttonSave: UIBarButtonItem!
     
     var _bem : Bem?
     var _dep : Dependencia?
@@ -30,7 +31,7 @@ class BemViewController: UIViewController {
     var usrLogado : Usuario? = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado)
     
     var est_conserv = ["Ótimo", "Bom", "Danificado", "Obsoleto", "Inservível"]
-    
+    var segueSender: UIStoryboardSegue?
     
     
     override func viewDidLoad() {
@@ -103,6 +104,21 @@ class BemViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func saveBensDetails(_ sender: Any) {
+        
+//        if let _identifier = segueSender?.identifier {
+//        switch _identifier {
+//        case "scannerToDetails":
+//            self.performSegue(withIdentifier: "unwindToScanner", sender: self)
+//        case "DetalhesBemSegue":
+//            self.performSegue(withIdentifier: "unwindToLista", sender: self)
+//        default:
+//            break;
+//        }
+//        }
+        
+        
+    }
 
     /*
     // MARK: - Navigation

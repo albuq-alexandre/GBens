@@ -11,6 +11,7 @@
         <attribute name="nome_fabricante" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nome_pbms" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nr_serie" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nrCodBem" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="obs" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parcelas" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="pbms" optional="YES" attributeType="String" syncable="YES"/>
@@ -63,7 +64,7 @@
         <relationship name="dep_localizacao" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="usuario_local" inverseEntity="Dependencia" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Bem" positionX="-360" positionY="36" width="128" height="390"/>
+        <element name="Bem" positionX="-360" positionY="36" width="128" height="403"/>
         <element name="Dependencia" positionX="304" positionY="-81" width="128" height="208"/>
         <element name="Localizacao" positionX="79" positionY="-85" width="128" height="225"/>
         <element name="Usuario" positionX="558" positionY="-63" width="126" height="165"/>

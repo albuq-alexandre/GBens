@@ -186,7 +186,9 @@ class ListaBensTableViewController: UITableViewController {
                 (segue.destination as! BemViewController)._bem = self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
                 (segue.destination as! BemViewController)._dep = (self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!) as Bem).dep_owner
                 (segue.destination as! BemViewController)._loc = (self.fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!) as Bem).place
+                (segue.destination as! BemViewController).segueSender = segue
                 
+                (segue.destination as! BemViewController).buttonSave.isEnabled = true
                 
             default:
                 break;

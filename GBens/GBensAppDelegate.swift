@@ -215,6 +215,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         for i in 0..<10 {
             let b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
             b.codBem = "0000000000\(i + finalbem)"
+            b.nrCodBem = Int64(i + finalbem)
             b.nome = "Bem nr. 000000000\(i + finalbem)"
             b.pbms = "99.15.050.905008"
             b.pbms1 = "99"

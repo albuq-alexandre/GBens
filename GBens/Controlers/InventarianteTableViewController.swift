@@ -17,7 +17,7 @@ class InventarianteTableViewController: UITableViewController {
     weak var dep : Dependencia?
     weak var usuario : Usuario?
     
-    var from_user : String?
+    var from_user : String? = "teste@teste.com"
     var myuser : Usuario?
     
    
