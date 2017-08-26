@@ -41,10 +41,16 @@ class BemViewController: UIViewController {
             usrLogado = appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
         }
         
+        if _dep == nil {
+            _dep = usrLogado?.dep_localizacao
+        }
+        
         if _loc == nil {
-            let t_loc: [Localizacao] = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao?.place_owner?.allObjects)! as! [Localizacao]
+            let t_loc: [Localizacao] = usrLogado!.dep_localizacao?.place_owner?.allObjects as! [Localizacao]
             _loc = t_loc[0]
         }
+        
+        
         
         
         if usrLogado?.dep_localizacao != _dep {
@@ -78,47 +84,52 @@ class BemViewController: UIViewController {
         }
         
         
+        
+        
+        if _dep?.place_owner == nil {
+            _dep = usrLogado?.dep_localizacao
+            let t_loc: [Localizacao] = _dep?.place_owner?.allObjects as! [Localizacao]
+            if t_loc.first != nil {
+                _loc = t_loc.first
+                _bem?.dep_owner = usrLogado?.dep_localizacao
+                pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+            }
+        } else {
+            pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+        }
+        
         labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
         labelEnderecoLocal.text = _loc?.endereco
         labelAndarLocal.text = "\(_loc?.andar ?? 0) andar"
         labelSalaLocal.text = _loc?.sala
         labelSetorLocal.text = _loc?.setor
-        
-       
-        pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
-       
+
         
         // Do any additional setup after loading the view.
     }
 
     @IBAction func transfereParaMinhaDep(_ sender: Any) {
-        _bem?.dep_owner = (UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao
-        _dep = (UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao
-        let t_loc: [Localizacao] = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado?.dep_localizacao?.place_owner?.allObjects)! as! [Localizacao]
-        _loc = t_loc[0]
-        pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+        
+        _dep = usrLogado?.dep_localizacao
+        let t_loc: [Localizacao] = _dep?.place_owner?.allObjects as! [Localizacao]
+        if t_loc.first != nil {
+            _loc = t_loc.first
+            _bem?.dep_owner = usrLogado?.dep_localizacao
+            pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+            labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
+            labelEnderecoLocal.text = _loc?.endereco
+            labelAndarLocal.text = "\(_loc?.andar ?? 0) andar"
+            labelSalaLocal.text = _loc?.sala
+            labelSetorLocal.text = _loc?.setor
+        }
     }
+        
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func saveBensDetails(_ sender: Any) {
-        
-//        if let _identifier = segueSender?.identifier {
-//        switch _identifier {
-//        case "scannerToDetails":
-//            self.performSegue(withIdentifier: "unwindToScanner", sender: self)
-//        case "DetalhesBemSegue":
-//            self.performSegue(withIdentifier: "unwindToLista", sender: self)
-//        default:
-//            break;
-//        }
-//        }
-        
-        
-    }
 
     /*
     // MARK: - Navigation
@@ -129,17 +140,34 @@ class BemViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         if let identifier = segue.identifier{
+            
+     
+            
             switch identifier {
-            case "unwindToLista":
-                
+            case "unwindToScanner":
+                break
             default:
                 break;
             }
         }
 
+    } */
+ 
+    override func willMove(toParentViewController parent: UIViewController?) {
         
+        if parent == nil {
+            do {
+                try (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
-    */
+    
+    
 }
 
 

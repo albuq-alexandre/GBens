@@ -12,8 +12,7 @@ import AVFoundation
 
 class ScannerViewController: UIViewController {
 
-    @IBAction func unwindToScanner(segue: UIStoryboardSegue) {
-    }
+    
     
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -22,6 +21,9 @@ class ScannerViewController: UIViewController {
     @IBOutlet weak var labelStatus: UILabel!
     var capturedBem: Bem?
     
+    @IBAction func unwindToScanner(segue: UIStoryboardSegue) {
+      
+    }
     
     
     override func viewDidLoad() {
@@ -75,8 +77,8 @@ class ScannerViewController: UIViewController {
         tqrCodeFrameView = UIView()
         
         if let tqrCodeFrameView = tqrCodeFrameView {
-            tqrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-            tqrCodeFrameView.layer.borderWidth = 3
+            tqrCodeFrameView.layer.borderColor = UIColor.red.cgColor
+            tqrCodeFrameView.layer.borderWidth = 2
             qrCodeFrameView.addSubview(tqrCodeFrameView)
             qrCodeFrameView.bringSubview(toFront: tqrCodeFrameView)
         }
@@ -118,18 +120,16 @@ class ScannerViewController: UIViewController {
         // Get the metadata object.
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
-       // if metadataObj.type == AVMetadataObjectTypeEAN13Code {
-            // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
+      
             let barCodeObject = previewLayer?.transformedMetadataObject(for: metadataObj)
-            qrCodeFrameView?.frame = barCodeObject!.bounds
+            tqrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
                 labelStatus.text = metadataObj.stringValue
                 AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                AudioServicesPlaySystemSound(SystemSoundID( 1006))
                 found(code: metadataObj.stringValue)
-                //print(metadataObj.type)
-        //    }
-        
+                
         
             
         }
@@ -143,22 +143,23 @@ class ScannerViewController: UIViewController {
         labelStatus.text = code
         
        // let codeStartIndex = code.index((code.startIndex), offsetBy: 1)..<code.index((code.endIndex), offsetBy: -1)
-
+        tqrCodeFrameView?.frame = CGRect.zero
+       
 
         let bemCoded = calcCodBem(code: code)
         
 
-        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        //let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
         
         let fetchRequest : NSFetchRequest<Bem> = Bem.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "codBem", ascending: true , selector: #selector(NSString.localizedStandardCompare(_:)))]
-        fetchRequest.fetchBatchSize = 1
+        fetchRequest.fetchBatchSize = 20
         fetchRequest.predicate = NSPredicate(format: "nrCodBem == %@", bemCoded, ["","",""])
         
         var fetchedBem : [Bem]
         do {
             
-            fetchedBem = try managedContext.fetch(fetchRequest)
+            fetchedBem = try (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext.fetch(fetchRequest)
             
         } catch {
             
@@ -174,20 +175,6 @@ class ScannerViewController: UIViewController {
             
             
         }
-        //print (fetchedBem.first?.codBem! as Any)
-        
-        
-        
-//        let alertController = UIAlertController(title: "Sucesso", message: "Bem Lido \(fetchedBem.first?.codBem ?? bemCoded)", preferredStyle: .alert)
-//        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//        alertController.addAction(defaultAction)
-//        self.present(alertController, animated: true, completion: nil)
-
-        //code?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSString.CompareOptions.RegularExpressionSearch, range:nil).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        
-        
-
-        
         
         
     }
@@ -204,7 +191,7 @@ class ScannerViewController: UIViewController {
         codes = "\(coden ?? 0)"
             
         }
-        print(codes)
+        //print(codes)
         return codes
         
         
