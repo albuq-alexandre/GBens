@@ -83,20 +83,15 @@ class BemViewController: UIViewController {
          pickerEstadoConservacao.selectRow(est_conserv.index(of: (_bem?.estadoConservacao)!)!, inComponent: 0, animated: true)
         }
         
-        
-        
-        
-        if _dep?.place_owner == nil {
-            _dep = usrLogado?.dep_localizacao
+        if (_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!) == nil {
+            
             let t_loc: [Localizacao] = _dep?.place_owner?.allObjects as! [Localizacao]
-            if t_loc.first != nil {
-                _loc = t_loc.first
-                _bem?.dep_owner = usrLogado?.dep_localizacao
-                pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
-            }
-        } else {
-            pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
+            _bem?.place =  t_loc.first
+            _loc = t_loc.first
+            
         }
+        
+        pickerLocal.selectRow((_dep?.place_owner?.allObjects as! [Localizacao]).index(of: _loc!)!, inComponent: 0, animated: true)
         
         labelPrefixoNomeDepOwner.text = "\(_dep?.prefixo ?? "0000" ) - \(_dep?.nome ?? "Sem Prefixo")"
         labelEnderecoLocal.text = _loc?.endereco

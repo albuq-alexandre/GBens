@@ -34,6 +34,7 @@ class ScannerViewController: UIViewController {
         
         let videoCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         let videoInput: AVCaptureDeviceInput
+        labelStatus.text = "***Sem Detecção***"
         
         do {
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
@@ -66,26 +67,65 @@ class ScannerViewController: UIViewController {
         }
         
         previewLayer = AVCaptureVideoPreviewLayer (session: captureSession)
-        previewLayer?.frame = view.layer.bounds
-        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        previewLayer.frame = qrCodeFrameView.layer.bounds
+        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        previewLayer.connection.videoOrientation = AVCaptureVideoOrientation.portrait
+        previewLayer.removeAllAnimations()
+        
         qrCodeFrameView.layer.addSublayer(previewLayer!)
         
         
-        captureSession.startRunning()
         
         // Initialize QR Code Frame to highlight the QR code
         tqrCodeFrameView = UIView()
         
         if let tqrCodeFrameView = tqrCodeFrameView {
             tqrCodeFrameView.layer.borderColor = UIColor.red.cgColor
-            tqrCodeFrameView.layer.borderWidth = 2
+            tqrCodeFrameView.layer.borderWidth = 3
             qrCodeFrameView.addSubview(tqrCodeFrameView)
             qrCodeFrameView.bringSubview(toFront: tqrCodeFrameView)
+            
         }
         
-        // Do any additional setup after loading the view.
+        captureSession.startRunning()
+
+        
+        
     }
 
+    func updateVideoOrientation() {
+        guard let previewLayer = self.previewLayer else {
+            return
+        }
+        guard previewLayer.connection.isVideoOrientationSupported else {
+            print("isVideoOrientationSupported is false")
+            return
+        }
+        
+        let statusBarOrientation = UIApplication.shared.statusBarOrientation
+        let videoOrientation: AVCaptureVideoOrientation = statusBarOrientation.videoOrientation ?? .portrait
+        
+        if previewLayer.connection.videoOrientation == videoOrientation {
+            print("no change to videoOrientation")
+            return
+        }
+        
+        previewLayer.frame = qrCodeFrameView.layer.bounds
+        previewLayer.connection.videoOrientation = videoOrientation
+        previewLayer.removeAllAnimations()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: nil, completion: { [weak self] (context) in
+            DispatchQueue.main.async(execute: {
+                self?.updateVideoOrientation()
+            })
+        })
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -95,7 +135,8 @@ class ScannerViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if (captureSession?.isRunning == false) {
-            captureSession.startRunning();
+            captureSession.startRunning()
+            previewLayer.frame = qrCodeFrameView.layer.bounds
         }
     }
     
@@ -123,7 +164,7 @@ class ScannerViewController: UIViewController {
       
             let barCodeObject = previewLayer?.transformedMetadataObject(for: metadataObj)
             tqrCodeFrameView?.frame = barCodeObject!.bounds
-            
+        
             if metadataObj.stringValue != nil {
                 labelStatus.text = metadataObj.stringValue
                 AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
@@ -201,9 +242,9 @@ class ScannerViewController: UIViewController {
         return true
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
+    //override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    //    return .portrait
+   // }
 
     
     
@@ -245,4 +286,16 @@ class ScannerViewController: UIViewController {
 
 extension ScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     
+}
+
+extension UIInterfaceOrientation {
+    var videoOrientation: AVCaptureVideoOrientation? {
+        switch self {
+        case .portraitUpsideDown: return .portraitUpsideDown
+        case .landscapeRight: return .landscapeRight
+        case .landscapeLeft: return .landscapeLeft
+        case .portrait: return .portrait
+        default: return nil
+        }
+    }
 }
