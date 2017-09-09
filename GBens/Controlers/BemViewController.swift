@@ -28,7 +28,7 @@ class BemViewController: UIViewController {
     var _bem : Bem?
     var _dep : Dependencia?
     var _loc : Localizacao?
-    var usrLogado : Usuario? = ((UIApplication.shared.delegate as! GBensAppDelegate).usuariologado)
+    var usrLogado : Usuario?
     
     var est_conserv = ["Ótimo", "Bom", "Danificado", "Obsoleto", "Inservível"]
     var segueSender: UIStoryboardSegue?
@@ -38,7 +38,7 @@ class BemViewController: UIViewController {
         super.viewDidLoad()
 
         if usrLogado == nil {
-            usrLogado = appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
+            usrLogado = Usuario().appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
         }
         
         if _dep == nil {

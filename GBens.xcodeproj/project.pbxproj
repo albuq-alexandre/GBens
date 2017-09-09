@@ -13,7 +13,6 @@
 		385811B91EFB1E29007CD2E7 /* GBensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811B81EFB1E29007CD2E7 /* GBensTests.swift */; };
 		385811C41EFB1E29007CD2E7 /* GBensUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811C31EFB1E29007CD2E7 /* GBensUITests.swift */; };
 		385811D31EFB1E34007CD2E7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385811D21EFB1E34007CD2E7 /* MapKit.framework */; };
-		385811DD1EFB2009007CD2E7 /* DBCoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811D51EFB2009007CD2E7 /* DBCoreDataController.swift */; };
 		385811DE1EFB2009007CD2E7 /* InventarianteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811D61EFB2009007CD2E7 /* InventarianteTableViewController.swift */; };
 		385811DF1EFB2009007CD2E7 /* InventarianteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811D71EFB2009007CD2E7 /* InventarianteViewController.swift */; };
 		385811E01EFB2009007CD2E7 /* InventarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385811D81EFB2009007CD2E7 /* InventarioViewController.swift */; };
@@ -30,6 +29,7 @@
 		3858120F1EFB3333007CD2E7 /* GBensAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3858120E1EFB3333007CD2E7 /* GBensAppDelegate.swift */; };
 		385812131EFE23A8007CD2E7 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385812121EFE23A8007CD2E7 /* NSManagedObjectContext.swift */; };
 		385812161EFF1525007CD2E7 /* BensBackupFirebase.json in Resources */ = {isa = PBXBuildFile; fileRef = 385812151EFF1525007CD2E7 /* BensBackupFirebase.json */; };
+		38A6B6811F647BF8006B90D8 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6B6801F647BF8006B90D8 /* APIService.swift */; };
 		38EE7E9D1F3FF00F006EC9D8 /* Bem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E951F3FF00F006EC9D8 /* Bem+CoreDataClass.swift */; };
 		38EE7E9E1F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E961F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift */; };
 		38EE7E9F1F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E971F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift */; };
@@ -76,7 +76,6 @@
 		385811C31EFB1E29007CD2E7 /* GBensUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBensUITests.swift; sourceTree = "<group>"; };
 		385811C51EFB1E29007CD2E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385811D21EFB1E34007CD2E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		385811D51EFB2009007CD2E7 /* DBCoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBCoreDataController.swift; sourceTree = "<group>"; };
 		385811D61EFB2009007CD2E7 /* InventarianteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventarianteTableViewController.swift; sourceTree = "<group>"; };
 		385811D71EFB2009007CD2E7 /* InventarianteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventarianteViewController.swift; sourceTree = "<group>"; };
 		385811D81EFB2009007CD2E7 /* InventarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventarioViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		3858120E1EFB3333007CD2E7 /* GBensAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBensAppDelegate.swift; sourceTree = "<group>"; };
 		385812121EFE23A8007CD2E7 /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSManagedObjectContext.swift; path = Extensions/NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		385812151EFF1525007CD2E7 /* BensBackupFirebase.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BensBackupFirebase.json; sourceTree = "<group>"; };
+		38A6B6801F647BF8006B90D8 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Service/APIService.swift; sourceTree = "<group>"; };
 		38EE7E951F3FF00F006EC9D8 /* Bem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		38EE7E961F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		38EE7E971F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dependencia+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -163,6 +163,7 @@
 		3858119F1EFB1E28007CD2E7 /* GBens */ = {
 			isa = PBXGroup;
 			children = (
+				38A6B67D1F6476AF006B90D8 /* Service */,
 				385812141EFF14D0007CD2E7 /* DatabaseBackup */,
 				385812111EFE236E007CD2E7 /* Extensions */,
 				385812101EFE0543007CD2E7 /* Assets */,
@@ -211,7 +212,6 @@
 		385811D41EFB2009007CD2E7 /* Controlers */ = {
 			isa = PBXGroup;
 			children = (
-				385811D51EFB2009007CD2E7 /* DBCoreDataController.swift */,
 				385811D61EFB2009007CD2E7 /* InventarianteTableViewController.swift */,
 				385811D71EFB2009007CD2E7 /* InventarianteViewController.swift */,
 				385811D81EFB2009007CD2E7 /* InventarioViewController.swift */,
@@ -271,6 +271,14 @@
 				385812151EFF1525007CD2E7 /* BensBackupFirebase.json */,
 			);
 			name = DatabaseBackup;
+			sourceTree = "<group>";
+		};
+		38A6B67D1F6476AF006B90D8 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				38A6B6801F647BF8006B90D8 /* APIService.swift */,
+			);
+			name = Service;
 			sourceTree = "<group>";
 		};
 		3B49C39471144B10159FE9CA /* Pods */ = {
@@ -594,9 +602,9 @@
 				385811FC1EFB2028007CD2E7 /* InventariosTableViewCell.swift in Sources */,
 				380668941F3183B00083B004 /* BemViewController.swift in Sources */,
 				38EE7EA11F3FF00F006EC9D8 /* Localizacao+CoreDataClass.swift in Sources */,
-				385811DD1EFB2009007CD2E7 /* DBCoreDataController.swift in Sources */,
 				38EE7EA21F3FF00F006EC9D8 /* Localizacao+CoreDataProperties.swift in Sources */,
 				385811E11EFB2009007CD2E7 /* ListaBensTableViewController.swift in Sources */,
+				38A6B6811F647BF8006B90D8 /* APIService.swift in Sources */,
 				385811DE1EFB2009007CD2E7 /* InventarianteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

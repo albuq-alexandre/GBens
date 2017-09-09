@@ -128,30 +128,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-//    func atualizaCoreData (usuario: User, prefixo: String) {
-//        
-//        let path = "Inventariadas\\" + prefixo
-//        let BensAInventariar = getJSONrest(usuario: usuario, path: path)
-//        
-//        //let bemEntityDescription = NSEntityDescription.entityForName("Bem", inManagedObjectContext: coreDataStack.context)
-//        
-//        for (nrBem) in BensAInventariar {
-//            
-//            let bem = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: persistentContainer.viewContext) as! Bem
-//        //    let bem = Bem(entity: bemEntityDescription!, insertinto: managedObjectContext)
-//            
-//            bem.codBem = (nrBem).value as? String
-//            
-//            
-//            
-//            
-//            
-//            
-////            bem.codBem = nrBem as String
-// //           bem.categoria = BensAInventariar.keys
-//            
-//        }
-//        
+            
     
     // MARK: - Dummy test CoreData
         

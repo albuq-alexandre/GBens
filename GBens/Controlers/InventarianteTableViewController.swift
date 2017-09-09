@@ -110,7 +110,7 @@ class InventarianteTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell") as! AccountSwitcherTableViewCell
         
-        myuser = appUser(email: from_user!)
+        myuser = Usuario().appUser(email: from_user!)
         cell.setupCell(theuser: myuser!)
         
         return cell
@@ -161,7 +161,7 @@ class InventarianteTableViewController: UITableViewController {
             case "toInventarioDetalhe":
                 (segue.destination as! InventarioViewController).dep = self.pfx_fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
             case "segueToInventariante":
-                (segue.destination as! InventarianteViewController).theUser = appUser(email: (from_user)!)
+                (segue.destination as! InventarianteViewController).theUser = Usuario().appUser(email: (from_user)!)
             default:
                 break;
             }

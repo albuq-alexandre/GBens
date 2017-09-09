@@ -39,37 +39,18 @@ class LoginViewController: UIViewController {
                 Auth.auth().addStateDidChangeListener { (auth, user) in
                     if user != nil {
                         self.theuser = user?.email
-                       (UIApplication.shared.delegate as! GBensAppDelegate).usuariologado = appUser(email: self.theuser!)
-                        // let path = "Users\\" + (user?.email?.components(separatedBy: "@")[0])!
-                       // print (path)  //FIXME: - Download dos dados Firebase
+                        
+                        let path = "Users/\((user?.email?.components(separatedBy: "@")[0])!)"
+                        print (path)  //FIXME: - Download dos dados Firebase
+                        let apiService = APIService()
+                        
+                        let inventariadas = apiService.getJSONrest(usuario: user!, path: path)
                         
                         
-//                        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-//                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
-//                        fetchRequest.fetchBatchSize = 1
-//                        fetchRequest.predicate = NSPredicate(format: "email == %@", user!.email!)
-//                        
-//                        var fetchedUser : [Usuario]
-//                        do {
-//                            
-//                            fetchedUser = try fetchRequest.execute()
-//                            
-//                        } catch {
-//                            fatalError("Falha ao encontrar usuário: \(error)")
-//                            
-//                        }
-//                        
+                        print(inventariadas)
                         
                         
                         
-//                        let inventariadas = getJSONrest(usuario: user!, path: path)
-//                        
-//                        for (nr, prefixo) in inventariadas {
-//                            print (nr)
-//                            print (prefixo)
-////                            atualizaCoreData(usuario: user!, prefixo)
-                      //  }
-                    
                         
                     } else {
                         print ("erro de user")
@@ -78,8 +59,14 @@ class LoginViewController: UIViewController {
                 let alertController = UIAlertController(title: "Sucesso", message: "Usuário Autenticado", preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(defaultAction)
-               // self.present(alertController, animated: true, completion: nil)
-        
+                self.present(alertController, animated: true, completion: nil)
+                
+                //abre a tela da lista de inventários
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let gBensTabBar = storyboard.instantiateViewController(withIdentifier: "gBensTabBar") as! UITabBarController
+                let appdelegate = UIApplication.shared.delegate as! GBensAppDelegate
+                appdelegate.window?.rootViewController = gBensTabBar
+                
             } else {
                 
                 //Mostra o erro retornado pelo firebase
@@ -91,10 +78,10 @@ class LoginViewController: UIViewController {
             }
             
         }
-    }
-    //abre a tela da lista de bens
-    self.performSegue(withIdentifier: "segueToResumo", sender: nil)
-    
+        }
+
+
+
 }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,143 +105,18 @@ class LoginViewController: UIViewController {
 //  MARK: - Navigation
  
   //In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let identifier = segue.identifier{
-        switch identifier {
-        case "segueToResumo":
-            let dest = segue.destination as! InventarianteTableViewController
-              dest.from_user = self.userName.text
-        default:
-            break;
-            
-    
-        }
-    
-    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//    }
+//    
+//    
   
  }
 
-}
-    }
-
-// MARK: - JSON download
-
-//func getJSONrest (usuario: User, path: String) -> [String: Any] {
-////
-//    
-//    usuario.getIDToken() { (authToken, error) in
-//        if authToken != nil {
-//           
-//            let config = URLSessionConfiguration.default
-//            let session = URLSession(configuration: config)
-//            
-//            let urlpath = "https:gbem-b2c8c.firebaseio.com/\(path).json"
-//            
-//            let urlfirebase = URL(string: urlpath)
-//            
-//            var request = URLRequest(url: urlfirebase!)
-//            
-//            request.httpMethod = "GET"
-//            request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
-//            
-//            let task = session.dataTask(with: request) { (data, response, error) in
-//                if error != nil {
-//                    var jBens: [String : Any] = [:]
-//                    jBens.updateValue("0", forKey: "erro")
-//                } else {
-//                    let jBens = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-//                }
-//            }
-//            task.resume()
-//        }
-//        
-//        var jBens: [String : Any] = [:]
-//        jBens.updateValue("0", forKey: "erro")
-//
-//    return jBens
-//    
-//    
-//    
-//}
-//}
-//
-
-// MARK: - New User
 
 
-
-// MARK: - Renew Session Login
-//
-
-
-    func renewSessionLogin(usuario: Usuario?) {
-        
-        let alertController = UIAlertController(title: "Login", message: "Por favor entre com suas credenciais", preferredStyle: .alert)
-        
-        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
-            //This is called when the user presses the cancel button.
-            print("You've pressed the cancel button");
-        }
-        
-        let actionLogin = UIAlertAction(title: "Login", style: .default) { (action:UIAlertAction) in
-            //This is called when the user presses the login button.
-            let textUser = alertController.textFields![0] as UITextField;
-            let textPW = alertController.textFields![1] as UITextField
-            
-            print("The user entered:%@ & %@",textUser.text!,textPW.text!);
-        }
-        
-        alertController.addTextField { (textField) -> Void in
-            //Configure the attributes of the first text box.
-            textField.placeholder = "E-mail"
-        }
-        
-        alertController.addTextField { (textField) -> Void in
-            //Configure the attributes of the second text box.
-            textField.placeholder = "Password"
-            textField.isSecureTextEntry = true
-        }
-        
-        //Add the buttons
-        alertController.addAction(actionCancel)
-        alertController.addAction(actionLogin)
-        
-        //Present the alert controller
-//        self.presentViewController(alertController, animated: true, completion:nil)
-        
-        
-}
-
-func appUser(email: String) -> Usuario {
     
-    let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
-    
-    let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
-    fetchRequest.fetchBatchSize = 10
-    
-    fetchRequest.predicate = NSPredicate(format: "email == %@", email)
-    var fetchedUser : [Usuario]
-    do {
-        
-        fetchedUser = try managedContext.fetch(fetchRequest)
-        
-    } catch {
-        fatalError("Falha ao encontrar usuário: \(error)")
-        
-    }
-    
-    if fetchedUser.count == 0 {
-        
-        fatalError("Falha ao encontrar usuário!")
-        
-    } else {
-    
-    return fetchedUser[0]
-    }
-    
-    
-}
+
 
 
 
