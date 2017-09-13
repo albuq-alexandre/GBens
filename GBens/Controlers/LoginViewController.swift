@@ -36,34 +36,32 @@ class LoginViewController: UIViewController {
             
             if error == nil {
                 
-                Auth.auth().addStateDidChangeListener { (auth, user) in
-                    if user != nil {
-                        self.theuser = user?.email
-                        
-                        let path = "Users/\((user?.email?.components(separatedBy: "@")[0])!)"
-                        print (path)  //FIXME: - Download dos dados Firebase
-                        let apiService = APIService()
-                        apiService.path = ""
-                        
-                       apiService.getDataWith(nested: "Inventariadas") { (result) in
-                            print (result)
-                        }
-                            apiService.getDataWith(nested: "Users") { (result) in
-                                print (result)
-                        }
-                        
-//                        let inventariadas = apiService.getJSONrest(usuario: user!, path: path)
-//                        
-//                        
-//                        print(inventariadas)
-                        
-                        
-                        
-                        
-                    } else {
-                        print ("erro de user")
-                    }
-                }
+                
+                self.theuser = user?.email
+                
+                let path = "Users/\((user?.email?.components(separatedBy: "@")[0])!)"
+//                print (path)
+                
+                //FIXME: - Download dos dados Firebase
+                
+                let apiService = APIService()
+                apiService.path = path
+                
+//                apiService.getDataWith(nested: "Inventariadas") { (result) in
+//                    print (result)
+//                }
+//                apiService.getDataWith(nested: "Users") { (result) in
+//                    print (result)
+//                }
+//                
+//                let inventariadas = apiService.getJSONrest(usuario: user!, path: path)
+//                
+//                
+//                print(inventariadas)
+//                
+                
+                
+                
                 let alertController = UIAlertController(title: "Sucesso", message: "Usuário Autenticado", preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(defaultAction)
