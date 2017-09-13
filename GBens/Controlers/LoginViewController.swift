@@ -43,11 +43,19 @@ class LoginViewController: UIViewController {
                         let path = "Users/\((user?.email?.components(separatedBy: "@")[0])!)"
                         print (path)  //FIXME: - Download dos dados Firebase
                         let apiService = APIService()
+                        apiService.path = ""
                         
-                        let inventariadas = apiService.getJSONrest(usuario: user!, path: path)
+                       apiService.getDataWith(nested: "Inventariadas") { (result) in
+                            print (result)
+                        }
+                            apiService.getDataWith(nested: "Users") { (result) in
+                                print (result)
+                        }
                         
-                        
-                        print(inventariadas)
+//                        let inventariadas = apiService.getJSONrest(usuario: user!, path: path)
+//                        
+//                        
+//                        print(inventariadas)
                         
                         
                         

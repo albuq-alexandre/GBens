@@ -395,7 +395,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Inventariante" id="iVY-nK-pZd">
                         <barButtonItem key="backBarButtonItem" title="Logoff" id="mY2-QV-GQt"/>
-                        <barButtonItem key="rightBarButtonItem" title="Logoff" id="uus-qd-28Y"/>
+                        <barButtonItem key="rightBarButtonItem" title="Logoff" id="uus-qd-28Y">
+                            <connections>
+                                <action selector="logoffButtonItem:" destination="GJK-ch-j7g" id="RbA-Yo-KoJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="AccountImage" destination="LmK-Tp-aqy" id="jmd-4g-kIA"/>
@@ -440,7 +444,13 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="0lQ-ut-SdF"/>
                                                 <constraint firstAttribute="width" constant="80" id="VMF-tf-WSM"/>
+                                                <constraint firstAttribute="width" secondItem="NqS-Kd-0uE" secondAttribute="height" multiplier="1:1" id="WE7-En-qVC"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="0lQ-ut-SdF"/>
+                                                </mask>
+                                            </variation>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-jc-2QK">
                                             <rect key="frame" x="116" y="120" width="143" height="30"/>
@@ -457,7 +467,6 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.37610617280000003" green="0.48848181959999998" blue="0.54595214130000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ae4-jc-2QK" secondAttribute="bottom" constant="4.5" id="OgE-II-l4G"/>
                                         <constraint firstItem="ae4-jc-2QK" firstAttribute="centerX" secondItem="zJr-da-ra3" secondAttribute="centerX" id="Rpv-ZT-wls"/>
                                         <constraint firstItem="NqS-Kd-0uE" firstAttribute="centerX" secondItem="zJr-da-ra3" secondAttribute="centerX" id="StD-Hl-iMG"/>
                                         <constraint firstItem="NqS-Kd-0uE" firstAttribute="top" secondItem="zJr-da-ra3" secondAttribute="topMargin" constant="8" id="Tid-gj-ioH"/>

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import FirebaseAuth
 
 
 class InventarianteViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -78,6 +79,14 @@ class InventarianteViewController: UIViewController, UIImagePickerControllerDele
     }
     
     
+    @IBAction func logoffButtonItem(_ sender: UIBarButtonItem) {
+        
+        try! Auth.auth().signOut()
+        if let storyboard = self.storyboard {
+            let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            self.present(vc, animated: false, completion: nil)
+        }
+    }
     
     
     

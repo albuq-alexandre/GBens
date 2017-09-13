@@ -14,12 +14,12 @@ import CoreData
 
 class APIService: NSObject {
     
-    let query = "dogs"
+    var path : String = ""
     lazy var endPoint: String = {
-        return "https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=\(self.query)&nojsoncallback=1#"
+        return "https://gbem-b2c8c.firebaseio.com/\(self.path).json"
     }()
     
-    func getDataWith(completion: @escaping (Result<[[String: AnyObject]]>) -> Void) {
+    func getDataWith(nested: String? , completion: @escaping (Result<[String: AnyObject]>) -> Void) {
         
         let urlString = endPoint
         
@@ -28,16 +28,23 @@ class APIService: NSObject {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             guard error == nil else { return completion(.Error(error!.localizedDescription)) }
-            guard let data = data else { return completion(.Error(error?.localizedDescription ?? "Não existem itens a mostrar"))
+            guard let data = data else { return completion(.Error(error?.localizedDescription ?? "1Não existem itens a mostrar"))
             }
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [String: AnyObject] {
-                    guard let itemsJsonArray = json["items"] as? [[String: AnyObject]] else {
-                        return completion(.Error(error?.localizedDescription ?? "Não existem itens a mostrar"))
+                    if nested != nil {
+                        guard let itemsJsonArray = json[nested!] as? [String: AnyObject] else {
+                            return completion(.Error(error?.localizedDescription ?? "Não existem \(nested!) a mostrar"))
+                        }
+                        DispatchQueue.main.async {
+                            completion(.Success(itemsJsonArray))
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.Success(json))
+                        }
                     }
-                    DispatchQueue.main.async {
-                        completion(.Success(itemsJsonArray))
-                    }
+                    
                 }
             } catch let error {
                 return completion(.Error(error.localizedDescription))
@@ -46,51 +53,16 @@ class APIService: NSObject {
     }
     
     
-    func atualizaCoreData (usuario: User, prefixo: String) {
-//        
+    func atualizaCoreData  (dataDict: [[String: AnyObject]]) throws -> Void  {
+//
 //        let path = "Inventariadas\\" + prefixo
 //        let BensAInventariar = getJSONrest(usuario: usuario, path: path)
 //        
+        
     }
     
     
     
-    // MARK: - JSON download
-    
-    func getJSONrest (usuario: User, path: String) -> [String: Any] {
-        
-        var jBens: [String : Any] = [:]
-        
-        usuario.getIDToken() { (authToken, error) in
-            if authToken != nil {
-                
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-                
-                let urlpath = "https://gbem-b2c8c.firebaseio.com/\(path).json"
-                
-                print (urlpath)
-                
-                let urlfirebase = URL(string: urlpath)
-                
-                var request = URLRequest(url: urlfirebase!)
-                
-                request.httpMethod = "GET"
-                request.addValue("auth", forHTTPHeaderField: "JWT "+authToken!)
-                
-                let task = session.dataTask(with: request) { (data, response, error) in
-                    if error != nil {
-                        var jBens: [String : Any] = [:]
-                        jBens.updateValue("0", forKey: "erro")
-                    } else {
-                        jBens = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String : Any]
-                    }
-                }
-                task.resume()
-            }
-        }   // FIXME: - Tratar o erro do getIdToken
-        return jBens
-    }
     
     
     // MARK: - New User
@@ -101,7 +73,7 @@ class APIService: NSObject {
     // FIXME: - Implementar renewLogin
     
     
-    func renewSessionLogin(usuario: Usuario?) -> UIAlertController {
+    func renewSessionLogin(usuario: Usuario) -> UIAlertController {
         
         let alertController = UIAlertController(title: "Login", message: "Por favor entre com suas credenciais", preferredStyle: .alert)
         
@@ -121,6 +93,7 @@ class APIService: NSObject {
         alertController.addTextField { (textField) -> Void in
             //Configure the attributes of the first text box.
             textField.placeholder = "E-mail"
+            textField.text = usuario.email
         }
         
         alertController.addTextField { (textField) -> Void in
@@ -136,11 +109,15 @@ class APIService: NSObject {
         //Code for Present the alert controller - paste in sender
         //        self.presentViewController(alertController, animated: true, completion:nil)
         
+            
         return alertController
+        
+    
+    
     }
-    
-    
 }
+
+
 
 enum Result<T> {
     case Success(T)
