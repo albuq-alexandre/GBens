@@ -41,7 +41,7 @@ public class Usuario: NSManagedObject {
             return fetchedUser[0]
         }
         
-        
+    
         
         
     }
