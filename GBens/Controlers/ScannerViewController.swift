@@ -273,6 +273,7 @@ class ScannerViewController: UIViewController {
                 (segue.destination as! BemViewController)._dep = capturedBem?.dep_owner
                 (segue.destination as! BemViewController)._loc = capturedBem?.place
                 (segue.destination as! BemViewController).buttonSave.isEnabled = false
+                (segue.destination as! BemViewController).capturaLocal = true
             default:
                 break;
             }

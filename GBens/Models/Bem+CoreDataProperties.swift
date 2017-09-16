@@ -21,7 +21,7 @@ extension Bem {
     @NSManaged public var dt_aquisicao: NSDate?
     @NSManaged public var dt_inventario: NSDate?
     @NSManaged public var estadoConservacao: String?
-    @NSManaged public var geolocdatascan: NSObject?
+    @NSManaged public var geolocLat: Double
     @NSManaged public var nome: String?
     @NSManaged public var nome_fabricante: String?
     @NSManaged public var nome_pbms: String?
@@ -37,6 +37,7 @@ extension Bem {
     @NSManaged public var scan_date: NSDate?
     @NSManaged public var scannedImage: NSData?
     @NSManaged public var subcategoria: String?
+    @NSManaged public var geolocLong: Double
     @NSManaged public var dep_owner: Dependencia?
     @NSManaged public var place: Localizacao?
     @NSManaged public var user_inventariante: Usuario?

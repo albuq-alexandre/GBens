@@ -30,6 +30,11 @@ class BemViewController: UIViewController {
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var mapKitView: MKMapView!
     
+    let locationManager = CLLocationManager()
+    let newPin = MKPointAnnotation()
+    var capturaLocal : Bool? = false
+    var locValue : CLLocationCoordinate2D?
+    
     var _bem : Bem?
     var _dep : Dependencia?
     var _loc : Localizacao?
@@ -42,6 +47,28 @@ class BemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    
+        if capturaLocal! {
+            
+            _bem?.geolocLat = (locValue?.latitude)!
+            _bem?.geolocLat = (locValue?.longitude)!
+            capturaLocal = false
+            
+        }
+       
+        if (_bem?.geolocLat != nil) && (_bem?.geolocLat != nil) {
+            let coord = CLLocationCoordinate2D(latitude: (_bem?.geolocLat)!, longitude: (_bem?.geolocLat)!)
+            let bemPin = MKPointAnnotation()
+            bemPin.coordinate = coord
+            mapKitView.addAnnotation(bemPin)
+        }
+        
+        
+        
         if usrLogado == nil {
             usrLogado = APIService().appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
         }
@@ -104,14 +131,10 @@ class BemViewController: UIViewController {
         labelSalaLocal.text = _loc?.sala
         labelSetorLocal.text = _loc?.setor
 
-        
+        mapKitView.delegate = self
         mapKitView.userTrackingMode = .follow
-        
-        let location = mapKitView.userLocation
-        
-        mapKitView.setRegion(MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.075, 0.075)), animated: true)
-
-        
+        mapKitView.showsUserLocation = true
+       
         
         // Do any additional setup after loading the view.
     }
@@ -129,54 +152,18 @@ class BemViewController: UIViewController {
             labelAndarLocal.text = "\(_loc?.andar ?? 0) andar"
             labelSalaLocal.text = _loc?.sala
             labelSetorLocal.text = _loc?.setor
+            _bem?.geolocLat = (locValue?.latitude)!
+            _bem?.geolocLat = (locValue?.longitude)!
         }
     }
-    
-    func placepin (){
-        
-        
-        
-        let point = mapKitView.userLocation
-        let coord = mapKitView.convert(point, toCoordinateFrom: mapView)
-        self._bem?.geolocdatascan = coord
-        
-        
-        geocode(coord: coord)
-        
-        if let ann = self.annotation {
-            self.mapView.removeAnnotation(ann)
-        }
-        
-        
-        self.annotation = mapView.addCoord(coord)
-        
-        
-    }
-    
-    
-    func geocode(coord : CLLocationCoordinate2D ) {
-        let geocoder = CLGeocoder()
-        let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            guard let placemark = placemarks?.first else {
-                return
-            }
-            
-            let addr = ABCreateStringWithAddressDictionary(placemark.addressDictionary!, false)
-            
-            self._bem?.geolocdatascan = coord
-            
-        }
-        
-    }
-
-    override func didReceiveMemoryWarning() {
+  
+      override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -189,14 +176,15 @@ class BemViewController: UIViewController {
      
             
             switch identifier {
-            case "unwindToScanner":
-                break
+            case "unwindToLista":
+                (segue.destination as! ListaBensTableViewController).locValue = locValue!
+                
             default:
                 break;
             }
         }
 
-    } */
+    }
  
     override func willMove(toParentViewController parent: UIViewController?) {
         
@@ -211,6 +199,81 @@ class BemViewController: UIViewController {
             }
         }
     }
+    /*
+    func dropPinZoomIn(placemark: MKPlacemark){   // This function will "poste" the dialogue bubble of the pin.
+        var selectedPin: MKPlacemark?
+        
+        // cache the pin
+        selectedPin = placemark    // MKPlacemark() give the details like location to the dialogue bubble. Place mark is initialize in the function getLocationAddress (location: ) who call this function.
+        
+        // clear existing pins to work with only one dialogue bubble.
+        mapKitView.removeAnnotations(mapKitView.annotations)
+        let annotation = MKPointAnnotation()    // The dialogue bubble object.
+        annotation.coordinate = placemark.coordinate
+        annotation.title = placemark.name// Here you should test to understand where the location appear in the dialogue bubble.
+        
+        if let city = placemark.locality,
+            let state = placemark.administrativeArea {
+            annotation.subtitle = String((city))+String((state));
+        } // To "post" the user's location in the bubble.
+        
+        mapKitView.addAnnotation(annotation)     // To initialize the bubble.
+        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let region = MKCoordinateRegionMake(placemark.coordinate, span)
+        mapKitView.setRegion(region, animated: true)   // To update the map with a center and a size.
+    }
+    
+    func getLocationAddress(location:CLLocation) {    // This function give you the user's address from a location like locationManager.coordinate (it is usually the user's location).
+        let geocoder = CLGeocoder()
+        
+        print("-> Finding user address...")
+        
+        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
+            var placemark:CLPlacemark!
+            
+            if error == nil && placemarks!.count > 0 {
+                placemark = placemarks![0] as CLPlacemark
+                
+                
+                var addressString : String = ""
+                    if placemark.subThoroughfare != nil {
+                        addressString = placemark.subThoroughfare! + " "
+                    }
+                    if placemark.thoroughfare != nil {
+                        addressString = addressString + placemark.thoroughfare! + ", "
+                    }
+                    if placemark.postalCode != nil {
+                        addressString = addressString + placemark.postalCode! + " "
+                    }
+                    if placemark.locality != nil {
+                        addressString = addressString + placemark.locality! + ", "
+                    }
+                    if placemark.administrativeArea != nil {
+                        addressString = addressString + placemark.administrativeArea! + " "
+                    }
+                    if placemark.country != nil {
+                        addressString = addressString + placemark.country!
+                    }
+                    
+                    let new_placemark: MKPlacemark = MKPlacemark (placemark: placemark)
+                    
+                    // new_placemark initialize a variable of type MKPlacemark () from geocoder to use the function dropPinZoomIn (placemark:).
+                    
+                    
+                    self.dropPinZoomIn (placemark: new_placemark)
+                    
+                    print (placemark.description)   // You can see the place mark's details like the country.
+                    
+                
+                
+                
+            }
+        })
+        
+    }
+    */
+    
+    
     
     
 }
@@ -258,6 +321,7 @@ extension BemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         switch pickerView {
         case pickerEstadoConservacao:
             _bem?.estadoConservacao = est_conserv[row]
+            
         case pickerLocal:
             _bem?.place = (_dep?.place_owner?.allObjects as! [Localizacao])[row]
             _loc = (_dep?.place_owner?.allObjects as! [Localizacao])[row]
@@ -273,6 +337,9 @@ extension BemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             
         }
 
+       _bem?.geolocLat = (locValue?.latitude)!
+       _bem?.geolocLat = (locValue?.longitude)!
+
         
         
         
@@ -285,7 +352,7 @@ extension BemViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
         
         if newState == .ending {
-            geocode(coord: view.annotation!.coordinate)
+            //geocode(coord: view.annotation!.coordinate)
         }
         
     }
@@ -296,20 +363,53 @@ extension BemViewController: MKMapViewDelegate {
             return nil
         }
         
+        
+        
         let reuseIdentifier = "pin"
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? MKPinAnnotationView
         
         if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            view!.pinTintColor = UIColor.orange
             view!.isDraggable = true
             view!.animatesDrop = true
         } else {
+            view?.pinTintColor = UIColor.darkGray
             view?.annotation = annotation
         }
         
         
         return view
         
+    }
+}
+
+extension BemViewController : CLLocationManagerDelegate {
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        mapKitView.removeAnnotation(newPin)
+        
+        let location = locations.last! as CLLocation
+        locValue = location.coordinate
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        
+        //set region on the map
+        mapKitView.setRegion(region, animated: true)
+        
+        newPin.coordinate = location.coordinate
+       
+        mapKitView.addAnnotation(newPin)
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location Manager falhou com o seguinte erro: \(error)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        mapKitView.showsUserLocation = (status == .authorizedAlways)
     }
 }
 

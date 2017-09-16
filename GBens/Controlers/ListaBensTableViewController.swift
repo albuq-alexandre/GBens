@@ -8,11 +8,17 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 class ListaBensTableViewController: UITableViewController {
 
+    var locValue : CLLocationCoordinate2D?
+    
+    
     @IBAction func unwindToLista(segue: UIStoryboardSegue) {
         _bem?.scan_date = Date() as NSDate
+        
+
         (segue.destination as! ListaBensTableViewController).tableView.reloadData()
     
     }

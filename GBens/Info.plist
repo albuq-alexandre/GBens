@@ -47,6 +47,8 @@
 	<string>GBens precisa usar sua Localização</string>
 	<key>NSLocationUsageDescription</key>
 	<string>GBens precisa usar sua Localização</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>GBens precisa usar sua Localização</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>GBens precisa usar sua Fototeca</string>
 	<key>UILaunchStoryboardName</key>
