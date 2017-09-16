@@ -17,9 +17,8 @@ class InventarianteTableViewController: UITableViewController {
     weak var dep : Dependencia?
     weak var usuario : Usuario?
     
-    var from_user : String? = "teste@teste.com"
-    var myuser : Usuario?
-    
+    var from_user : String? = Auth.auth().currentUser?.email
+    var myuser : Usuario? = APIService().appUser(email: (Auth.auth().currentUser?.email)!)
    
     var prefixo_fetchedResultsController : NSFetchedResultsController<Dependencia>?
     
@@ -110,7 +109,7 @@ class InventarianteTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSwitcherTableViewCell") as! AccountSwitcherTableViewCell
         
-        myuser = Usuario().appUser(email: from_user!)
+        myuser = APIService().appUser(email: from_user!)
         cell.setupCell(theuser: myuser!)
         
         return cell
@@ -161,7 +160,7 @@ class InventarianteTableViewController: UITableViewController {
             case "toInventarioDetalhe":
                 (segue.destination as! InventarioViewController).dep = self.pfx_fetchedResultsController().object(at: self.tableView.indexPathForSelectedRow!)
             case "segueToInventariante":
-                (segue.destination as! InventarianteViewController).theUser = Usuario().appUser(email: (from_user)!)
+                (segue.destination as! InventarianteViewController).theUser = APIService().appUser(email: (from_user)!)
             default:
                 break;
             }
@@ -199,7 +198,7 @@ extension InventarianteTableViewController : NSFetchedResultsControllerDelegate 
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         case .update:
-            (tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(inventariada: anObject as! Dependencia)
+            //(tableView.cellForRow(at: indexPath!) as! InventariosTableViewCell).setupCell(inventariada: anObject as! Dependencia)
            
             tableView.reloadData()
         

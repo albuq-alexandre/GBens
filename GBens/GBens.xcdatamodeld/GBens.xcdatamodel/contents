@@ -6,7 +6,7 @@
         <attribute name="dt_aquisicao" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="dt_inventario" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="estadoConservacao" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="geolocdatascan" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geolocdatascan" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="nome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nome_fabricante" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nome_pbms" optional="YES" attributeType="String" syncable="YES"/>
@@ -64,7 +64,7 @@
         <relationship name="dep_localizacao" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dependencia" inverseName="usuario_local" inverseEntity="Dependencia" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Bem" positionX="-360" positionY="36" width="128" height="403"/>
+        <element name="Bem" positionX="-360" positionY="36" width="128" height="405"/>
         <element name="Dependencia" positionX="304" positionY="-81" width="128" height="208"/>
         <element name="Localizacao" positionX="79" positionY="-85" width="128" height="225"/>
         <element name="Usuario" positionX="558" positionY="-63" width="126" height="165"/>

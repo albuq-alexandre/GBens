@@ -1093,6 +1093,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="d65-7g-Byh"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="delegate" destination="W4j-D4-VE5" id="el4-uD-C08"/>
+                                        </connections>
                                     </mapView>
                                 </subviews>
                                 <constraints>
@@ -1175,6 +1178,7 @@
                         <outlet property="labelPrefixoNomeDepOwner" destination="epu-gL-bKX" id="8Gx-Lb-hyR"/>
                         <outlet property="labelSalaLocal" destination="Cr6-9X-xUv" id="j5p-w2-DSR"/>
                         <outlet property="labelSetorLocal" destination="gYG-DA-1pW" id="stY-4x-Txz"/>
+                        <outlet property="mapKitView" destination="clS-6d-UWj" id="s73-qm-eoP"/>
                         <outlet property="pickerEstadoConservacao" destination="VVC-co-red" id="svW-yf-5qo"/>
                         <outlet property="pickerLocal" destination="WOL-ul-wNw" id="JMe-hV-4tV"/>
                         <outlet property="transfereParaMinhaDep" destination="ObJ-wV-Me7" id="h8r-j4-NFV"/>

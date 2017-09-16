@@ -12,7 +12,7 @@ import UIKit
 import Firebase
 import CoreData
 
-class APIService: NSObject {
+public class APIService: NSObject {
     
     var path : String = ""
     lazy var endPoint: String = {
@@ -53,99 +53,107 @@ class APIService: NSObject {
     }
     
     
-    func atualizaCoreData  (dataDict: [[String: AnyObject]]) throws -> Void  {
-        //
-        //        let path = "Inventariadas\\" + prefixo
-        //        let BensAInventariar = getJSONrest(usuario: usuario, path: path)
-        //
+    func atualizaCoreDataInventariadas  (dataDict: [String: AnyObject], myuser: Usuario) -> Void  {
         
-    }
-    
-    
-    func createDummyData(depd : Dependencia?, myuser: Usuario) {
-        
-        var prefixo : Int64 = Int64(9081)
-        var finalbem: Int = 0
+        let depData : [String:Any] = dataDict["data"] as! [String:Any]
+        let prefixo : Int64 = depData["prefixo"] as! Int64
+        let dep_opt: Dependencia? = APIService().depFromPrefixo(prefixo: "\(prefixo)")
         let managedObjectContext: NSManagedObjectContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        let dep : Dependencia
         
-        if depd != nil {
-            prefixo = Int64((depd?.prefixo!)!)! + 1
-            finalbem = Int(((prefixo - 9082 ) * 10) + Int64((depd?.bem_owner?.count)!))
+        
+        if dep_opt == nil {
+            dep = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: managedObjectContext) as! Dependencia
+        } else {
+            dep = dep_opt!
         }
         
-        let dep = NSEntityDescription.insertNewObject(forEntityName: "Dependencia", into: managedObjectContext) as! Dependencia
         
-        
-        dep.codUor = Int64(990000 + prefixo)
+        dep.codUor = depData["codUor"] as! Int64
         dep.nome = "Dependencia \(prefixo)"
         dep.prefixo = "\(prefixo)"
         dep.ultimasincroniz = (Date() as NSDate)
         dep.addToInventariante(myuser)
-        myuser.setValue( dep, forKey: "dep_localizacao")
         
         
-        for i in 0..<10 {
-            let b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: managedObjectContext) as! Bem
-            b.codBem = "0000000000\(i + finalbem)"
-            b.nrCodBem = Int64(i + finalbem)
-            b.nome = "Bem nr. 000000000\(i + finalbem)"
-            b.pbms = "99.15.050.905008"
-            b.pbms1 = "99"
-            b.pbms2 = "15"
-            b.pbms3 = "050"
-            b.pbms4 = "905008"
-            b.nome_pbms = "UltraBook Executivo"
-            b.categoria = "04"
-            b.subcategoria = "0009"
-            b.estadoConservacao = "Ótimo"
-            b.dt_aquisicao = Date() as NSDate // "10/04/2016")
-            b.parcelas = Int16(63)
-            b.dt_inventario = Date() as NSDate // "18/11/2016")
-            b.nr_serie = "0000000000\(i + finalbem)"
-            b.obs = "TestDummyData"
-            b.nome_fabricante = "Lenovo"
+       
+        _ = dataDict.map {
             
-            dep.addToBem_owner(b)
-            
-            let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: managedObjectContext) as! Localizacao
-            
-            loc.andar = Int16(i * 3)
-            loc.codLoc = prefixo * 1000000 + Int64(i + finalbem)
-            loc.endereco = "Endereco \(i)"
-            loc.bairro = "Bairro \(i)"
-            loc.cidade = "Cidade \(i)"
-            loc.complemento = "complemento \(i)"
-            loc.sala = "sala \(i)"
-            loc.setor = "setor \(i)"
-            loc.uf = "DF"
-            
-            loc.addToBem_place(b)
-            dep.addToPlace_owner(loc)
-            if dep.endPrincipal == nil {
-                dep.setValue(loc, forKey: "endPrincipal")
+            if let nrcodbem : Int64 = Int64($0.key) {
+                
+                let dictBem : [String:Any] = $0.value as! [String : Any]
+                let bem_opt : Bem? = bemFromNR(bem: Int($0.key)!)
+                let b : Bem
+                
+                if bem_opt == nil {
+                    b = NSEntityDescription.insertNewObject(forEntityName: "Bem", into: managedObjectContext) as! Bem
+                } else {
+                    b = bem_opt!
+                }
+                
+                
+                b.codBem = $0.key
+                
+                b.nrCodBem = nrcodbem
+                b.nome = dictBem["nome_pbms"] as? String
+                b.pbms = dictBem["pbms"] as? String
+                b.pbms1 = dictBem["pbms1"] as? String
+                b.pbms2 = dictBem["pbms2"] as? String
+                b.pbms3 = dictBem["pbms3"] as? String
+                b.pbms4 = dictBem["pbms3"] as? String
+                b.nome_pbms = dictBem["nome_pbms"] as? String
+                b.categoria = dictBem["categoria"] as? String
+                b.subcategoria = dictBem["subcategoria"] as? String
+                b.estadoConservacao = "Ótimo"
+                b.dt_aquisicao = dateFromString(dataS: (dictBem["dt_aquisicao"] as? String)!)
+                b.parcelas = 0
+                b.dt_inventario = dateFromString(dataS: (dictBem["dt_inventario"] as? String)!)
+                b.nr_serie = dictBem["nr_serie"] as? String
+                b.obs = dictBem["obs"] as? String
+                b.nome_fabricante = dictBem["nome_fabricante"] as? String
+                
+                dep.addToBem_owner(b)
+                
+                if dep.endPrincipal == nil {
+                    let dictLocMain: [String:Any] = depData["endPrincipal"] as! [String:Any]
+                    let locMain = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: managedObjectContext) as! Localizacao
+                    locMain.andar = (dictLocMain["andar"] as? Int16)!
+                    locMain.codLoc = prefixo * 1000000 + 1
+                    locMain.endereco = dictLocMain["endereco"] as? String
+                    locMain.bairro = dictLocMain["bairro"] as? String
+                    locMain.cidade = dictLocMain["cidade"] as? String
+                    locMain.complemento = dictLocMain["complemento"] as? String
+                    locMain.sala = dictLocMain["sala"] as? String
+                    locMain.setor = dictLocMain["setor"] as? String
+                    locMain.uf = dictLocMain["uf"] as? String
+                    dep.setValue(locMain, forKey: "endPrincipal")
+                    locMain.addToBem_place(b)
+                    dep.addToPlace_owner(locMain)
+                } else {
+                    let loc = NSEntityDescription.insertNewObject(forEntityName: "Localizacao", into: managedObjectContext) as! Localizacao
+                    let start = $0.key.index($0.key.endIndex, offsetBy: -1)
+                    let codlocstart = $0.key.index($0.key.endIndex, offsetBy: -4)
+                    let i = Int16(($0.key.substring(from: codlocstart)))!
+                    loc.andar = Int16(($0.key.substring(from: start)))!
+                    loc.codLoc = prefixo * 1000000 + Int64(i)
+                    loc.endereco = "Endereco \(i)"
+                    loc.bairro = "Bairro \(i)"
+                    loc.cidade = "Cidade \(i)"
+                    loc.complemento = "complemento \(i)"
+                    loc.sala = "sala \(i)"
+                    loc.setor = "setor \(i)"
+                    loc.uf = "DF"
+                    loc.addToBem_place(b)
+                    dep.addToPlace_owner(loc)
+                }
             }
-            
+            (UIApplication.shared.delegate as! GBensAppDelegate).saveContext()
         }
-        (UIApplication.shared.delegate as! GBensAppDelegate).saveContext ()
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // MARK: - New User
+        // MARK: - New User
     // FIXME: - Implementar New User
-    func createUser() -> Usuario {
+    func createUser( jsonData: [String:Any] ) -> Usuario {
         
         var myuser : Usuario
         
@@ -155,7 +163,7 @@ class APIService: NSObject {
         let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "email", ascending: false)]
         fetchRequest.fetchBatchSize = 10
-        
+        fetchRequest.predicate = NSPredicate(format: "email == %@", jsonData["email"] as! String)
         
         var usr : [Usuario]
         do {
@@ -169,9 +177,9 @@ class APIService: NSObject {
         
         if usr.count == 0 {
             myuser = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: managedContext) as! Usuario
-            myuser.codUser = "teste"
-            myuser.email = "teste@teste.com"
-            myuser.nome = "Teste"  // theuser.email?.components(separatedBy: "@")[0]
+            myuser.codUser = ( jsonData["email"] as! String).components(separatedBy: "@")[0]
+            myuser.email =  jsonData["email"] as? String
+            myuser.nome =  jsonData["nome"] as? String
         } else {
             myuser = usr.first!
         }
@@ -222,11 +230,117 @@ class APIService: NSObject {
         
         
         return alertController
+    }
+    
+    
+    func appUser(email: String) -> Usuario {
+        
+        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        
+        let fetchRequest : NSFetchRequest<Usuario> = Usuario.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
+        fetchRequest.fetchBatchSize = 10
+        
+        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+        var fetchedUser : [Usuario]
+        do {
+            
+            fetchedUser = try managedContext.fetch(fetchRequest)
+            
+        } catch {
+//            DispatchQueue.main.async {
+//                self.showAlertWith(title: "Error", message: "Falha ao encontrar usuário: \(error)")
+                fatalError("Falha ao encontrar usuário: \(error)")
+
+//            }
+
+                    }
+        
+        if fetchedUser.count == 0 {
+            
+//            DispatchQueue.main.async {
+//                self.showAlertWith(title: "Error", message: "Usuário Inexistente")
+                fatalError("Usuário Inexistente")
+//            }
+            
+            
+            
+        } else {
+            
+            return fetchedUser[0]
+        }
+    }
+    
+    func depFromPrefixo(prefixo: String) -> Dependencia? {
+        
+        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        
+        let fetchRequest : NSFetchRequest<Dependencia> = Dependencia.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nome", ascending: true)]
+        fetchRequest.fetchBatchSize = 1
+        
+        fetchRequest.predicate = NSPredicate(format: "prefixo == %@", prefixo)
+        var fetchedDep : [Dependencia]
+        do {
+            
+            fetchedDep = try managedContext.fetch(fetchRequest)
+            
+        } catch {
+            fatalError("Erro ao buscar prefixo \(prefixo) : \(error)")
+        }
+        
+        if fetchedDep.count == 0 {
+            //  "Prefixo inexistente"
+            return nil
+        } else {
+            return fetchedDep.first
+        }
+    }
+    
+    func dateFromString (dataS:String) -> NSDate? {
+        
+        let dateFormatter = DateFormatter()
+        
+        
+        // FIXME: - TRATAR O TAMANHO DA STRING E O DELIMITADOR DE DATA
+        
+        dateFormatter.dateFormat = "DD/MM/YY" // date_format_you_want_in_string from
+        
+        
+            let dataD = dateFormatter.date(from: dataS)! as NSDate
+            return dataD
         
         
         
         
     }
+    
+    func bemFromNR(bem: Int) -> Bem? {
+        
+        let managedContext = (UIApplication.shared.delegate as! GBensAppDelegate).persistentContainer.viewContext
+        
+        let fetchRequest : NSFetchRequest<Bem> = Bem.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nrCodBem", ascending: true)]
+        fetchRequest.fetchBatchSize = 1
+        
+        fetchRequest.predicate = NSPredicate(format: "nrCodBem == %d", bem)
+        var fetchedBem : [Bem]
+        do {
+            
+            fetchedBem = try managedContext.fetch(fetchRequest)
+            
+        } catch {
+            fatalError("Erro ao buscar Bem \(bem) : \(error)")
+        }
+        
+        if fetchedBem.count == 0 {
+            //  "Bem inexistente"
+            return nil
+        } else {
+            return fetchedBem.first
+        }
+    }
+
 }
 
 

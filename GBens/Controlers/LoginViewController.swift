@@ -39,17 +39,80 @@ class LoginViewController: UIViewController {
                 
                 self.theuser = user?.email
                 
+                
+                
+                // MARK: - Download dos dados Firebase
+                
+                // Atualização dos dados do Usuário
+                let apiServiceForUser = APIService()
+                var myUser : Usuario? = nil
+                var jsonDataForInventariadas : [String: Any] = [:]
+                var localizationDep : String = ""
                 let path = "Users/\((user?.email?.components(separatedBy: "@")[0])!)"
-//                print (path)
+                apiServiceForUser.path = path
                 
-                //FIXME: - Download dos dados Firebase
+                apiServiceForUser.getDataWith(nested: nil) { (result) in
+                    
+                    switch result {
+                        
+                    case .Success(let data):
+                       // jsonDataForUser = data as [ String : Any ]
+                        myUser = apiServiceForUser.createUser(jsonData: data)
+                        jsonDataForInventariadas = data["inventariadas"] as! [ String : Any ]
+                        localizationDep = "\(data["dep_localizacao"]!)"
+                    case .Error(let message):
+                        DispatchQueue.main.async {
+                            self.showAlertWith(title: "Error", message: message)
+                        }
+                    }
+                    
+                    
+                    
+                    _ = jsonDataForInventariadas.map {
+                        
+                        let apiServiceForDependencia = APIService()
+                        apiServiceForDependencia.path = "Inventariadas/\($0.value as! Int)"
+                        apiServiceForDependencia.getDataWith(nested: nil) { (result) in
+                            
+                            switch result {
+                                
+                            case .Success(let data):
+                                
+                                apiServiceForDependencia.atualizaCoreDataInventariadas(dataDict: data, myuser: myUser! )
+                                
+                                
+                            case .Error(let message):
+                                DispatchQueue.main.async {
+                                    self.showAlertWith(title: "Error", message: message)
+                                }
+                            }
+                        }
+                    }
+                    
+                    // atualizar a dependencia de localização do usuário aqui
+                    
+                    if let dep : Dependencia = APIService().depFromPrefixo(prefixo: localizationDep) {
+                        myUser?.setValue( dep, forKey: "dep_localizacao")
+                    } else {
+                        myUser?.setValue( APIService().depFromPrefixo(prefixo: "9081"), forKey: "dep_localizacao")
+                    }
+
+
+                    
+                }
                 
-                let apiService = APIService()
-                apiService.path = path
+//                var jsonDataforDependencia : [[String : Any]]
                 
-//                apiService.getDataWith(nested: "Inventariadas") { (result) in
-//                    print (result)
-//                }
+                
+                
+                
+                
+                
+                
+              //  let currentUser = apiServiceForUser.appUser(email: self.theuser!)
+                
+                
+                
 //                apiService.getDataWith(nested: "Users") { (result) in
 //                    print (result)
 //                }
@@ -106,7 +169,14 @@ class LoginViewController: UIViewController {
         self.passWord.text = "teste1"
     }
 
-
+    func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let action = UIAlertAction(title: title, style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
 
 //  MARK: - Navigation
  

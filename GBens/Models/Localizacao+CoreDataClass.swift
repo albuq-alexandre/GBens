@@ -8,8 +8,11 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 @objc(Localizacao)
 public class Localizacao: NSManagedObject {
 
+    var coord : CLLocationCoordinate2D?
+    
 }

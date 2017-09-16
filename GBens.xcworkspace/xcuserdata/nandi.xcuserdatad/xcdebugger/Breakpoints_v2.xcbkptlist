@@ -9,22 +9,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GBens/Controlers/InventarianteTableViewController.swift"
-            timestampString = "523323366.277751"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "GBens/Controlers/ScannerViewController.swift"
             timestampString = "525584430.596834"
             startingColumnNumber = "9223372036854775807"
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GBens/Controlers/BemViewController.swift"
-            timestampString = "525469706.505247"
+            timestampString = "527228260.011608"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "willMove(toParentViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -70,49 +54,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GBens/Controlers/BemViewController.swift"
-            timestampString = "525469271.644252"
+            filePath = "GBens/Service/APIService.swift"
+            timestampString = "527223044.951181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "createUser(jsonData:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GBens.BemViewController.viewDidLoad () -&gt; ()"
-                  moduleName = "GBens"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nandi/Desktop/GBens/GBens/GBens/Controlers/BemViewController.swift"
-                  timestampString = "527039421.190076"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "86"
-                  endingLineNumber = "86"
-                  offsetFromSymbolStart = "9769">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GBens.BemViewController.viewDidLoad () -&gt; ()"
-                  moduleName = "GBens"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nandi/Desktop/GBens/GBens/GBens/Controlers/BemViewController.swift"
-                  timestampString = "527039421.19257"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "86"
-                  endingLineNumber = "86"
-                  offsetFromSymbolStart = "18972">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

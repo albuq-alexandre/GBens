@@ -43,6 +43,10 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>GBens precisa usar sua Câmera</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>GBens precisa usar sua Localização</string>
+	<key>NSLocationUsageDescription</key>
+	<string>GBens precisa usar sua Localização</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>GBens precisa usar sua Fototeca</string>
 	<key>UILaunchStoryboardName</key>

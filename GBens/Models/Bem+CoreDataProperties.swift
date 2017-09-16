@@ -2,7 +2,7 @@
 //  Bem+CoreDataProperties.swift
 //  
 //
-//  Created by Alexandre de Sousa Albuquerque on 12/08/17.
+//  Created by Alexandre de Sousa Albuquerque on 16/09/17.
 //
 //
 
@@ -21,11 +21,12 @@ extension Bem {
     @NSManaged public var dt_aquisicao: NSDate?
     @NSManaged public var dt_inventario: NSDate?
     @NSManaged public var estadoConservacao: String?
-    @NSManaged public var geolocdatascan: String?
+    @NSManaged public var geolocdatascan: NSObject?
     @NSManaged public var nome: String?
     @NSManaged public var nome_fabricante: String?
     @NSManaged public var nome_pbms: String?
     @NSManaged public var nr_serie: String?
+    @NSManaged public var nrCodBem: Int64
     @NSManaged public var obs: String?
     @NSManaged public var parcelas: Int16
     @NSManaged public var pbms: String?
@@ -36,7 +37,6 @@ extension Bem {
     @NSManaged public var scan_date: NSDate?
     @NSManaged public var scannedImage: NSData?
     @NSManaged public var subcategoria: String?
-    @NSManaged public var nrCodBem: Int64
     @NSManaged public var dep_owner: Dependencia?
     @NSManaged public var place: Localizacao?
     @NSManaged public var user_inventariante: Usuario?

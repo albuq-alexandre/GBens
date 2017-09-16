@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import MapKit
+import CoreData
+import CoreLocation
+
 
 class BemViewController: UIViewController {
 
@@ -24,6 +28,7 @@ class BemViewController: UIViewController {
     @IBOutlet weak var transfereParaMinhaDep: UIButton!
     @IBOutlet weak var pickerLocal: UIPickerView!
     @IBOutlet weak var buttonSave: UIBarButtonItem!
+    @IBOutlet weak var mapKitView: MKMapView!
     
     var _bem : Bem?
     var _dep : Dependencia?
@@ -38,7 +43,7 @@ class BemViewController: UIViewController {
         super.viewDidLoad()
 
         if usrLogado == nil {
-            usrLogado = Usuario().appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
+            usrLogado = APIService().appUser(email: "teste@teste.com")   // FIXME: - TRATAR CASO NÃO FAÇA LOGIN
         }
         
         if _dep == nil {
@@ -100,6 +105,14 @@ class BemViewController: UIViewController {
         labelSetorLocal.text = _loc?.setor
 
         
+        mapKitView.userTrackingMode = .follow
+        
+        let location = mapKitView.userLocation
+        
+        mapKitView.setRegion(MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.075, 0.075)), animated: true)
+
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -118,8 +131,45 @@ class BemViewController: UIViewController {
             labelSetorLocal.text = _loc?.setor
         }
     }
-        
     
+    func placepin (){
+        
+        
+        
+        let point = mapKitView.userLocation
+        let coord = mapKitView.convert(point, toCoordinateFrom: mapView)
+        self._bem?.geolocdatascan = coord
+        
+        
+        geocode(coord: coord)
+        
+        if let ann = self.annotation {
+            self.mapView.removeAnnotation(ann)
+        }
+        
+        
+        self.annotation = mapView.addCoord(coord)
+        
+        
+    }
+    
+    
+    func geocode(coord : CLLocationCoordinate2D ) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            guard let placemark = placemarks?.first else {
+                return
+            }
+            
+            let addr = ABCreateStringWithAddressDictionary(placemark.addressDictionary!, false)
+            
+            self._bem?.geolocdatascan = coord
+            
+        }
+        
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -229,3 +279,38 @@ extension BemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
 }
+
+extension BemViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        
+        if newState == .ending {
+            geocode(coord: view.annotation!.coordinate)
+        }
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if let _ = annotation as? MKUserLocation {
+            return nil
+        }
+        
+        let reuseIdentifier = "pin"
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? MKPinAnnotationView
+        
+        if view == nil {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            view!.isDraggable = true
+            view!.animatesDrop = true
+        } else {
+            view?.annotation = annotation
+        }
+        
+        
+        return view
+        
+    }
+}
+
+
