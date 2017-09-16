@@ -200,7 +200,7 @@ class GBensAppDelegate: UIResponder, UIApplicationDelegate {
             b.pbms3 = "050"
             b.pbms4 = "905008"
             b.nome_pbms = "UltraBook Executivo"
-            b.categoria = "04"
+            b.categoria = "03"
             b.subcategoria = "0009"
             b.estadoConservacao = "Ótimo"
             b.dt_aquisicao = Date() as NSDate // "10/04/2016")

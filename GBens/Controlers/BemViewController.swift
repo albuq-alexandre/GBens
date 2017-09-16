@@ -41,7 +41,7 @@ class BemViewController: UIViewController {
     var usrLogado : Usuario?
     
     var est_conserv = ["Ótimo", "Bom", "Danificado", "Obsoleto", "Inservível"]
-    var segueSender: UIStoryboardSegue?
+        var segueSender: UIStoryboardSegue?
     
     
     override func viewDidLoad() {
@@ -95,8 +95,8 @@ class BemViewController: UIViewController {
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        if _bem?.scannedImage != nil {
-            imageBem.image = UIImage(data: (_bem?.scannedImage! as Data?)!)
+        if let index : Int = try Int((_bem?.categoria!)!) {
+            imageBem.image = UIImage().bemImage(index: index)
         } else {
             imageBem.image = #imageLiteral(resourceName: "BemPhoto")
         }
@@ -337,8 +337,8 @@ extension BemViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             
         }
 
-       _bem?.geolocLat = (locValue?.latitude)!
-       _bem?.geolocLat = (locValue?.longitude)!
+      // _bem?.geolocLat = (locValue?.latitude)!
+      // _bem?.geolocLat = (locValue?.longitude)!
 
         
         

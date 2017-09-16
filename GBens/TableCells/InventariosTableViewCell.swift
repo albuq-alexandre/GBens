@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class InventariosTableViewCell: UITableViewCell {
 
@@ -33,7 +34,10 @@ class InventariosTableViewCell: UITableViewCell {
             self.accessoryType = UITableViewCellAccessoryType.checkmark
             
         }
-    
+        let pendentes = inventariada.bem_owner?.count
+        
+        self.detailTextLabel?.text = "\(pendentes!) bens"
+     
     }
     
-}
+    }

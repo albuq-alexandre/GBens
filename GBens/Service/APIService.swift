@@ -102,7 +102,12 @@ public class APIService: NSObject {
                 b.pbms3 = dictBem["pbms3"] as? String
                 b.pbms4 = dictBem["pbms3"] as? String
                 b.nome_pbms = dictBem["nome_pbms"] as? String
-                b.categoria = dictBem["categoria"] as? String
+                
+                
+                    
+                    b.categoria = (dictBem["categoria"] as? String ?? "03")
+                print (b.categoria)
+            
                 b.subcategoria = dictBem["subcategoria"] as? String
                 b.estadoConservacao = "Ótimo"
                 b.dt_aquisicao = dateFromString(dataS: (dictBem["dt_aquisicao"] as? String)!)
@@ -323,7 +328,7 @@ public class APIService: NSObject {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "nrCodBem", ascending: true)]
         fetchRequest.fetchBatchSize = 1
         
-        fetchRequest.predicate = NSPredicate(format: "nrCodBem == %d", bem)
+        fetchRequest.predicate = NSPredicate(format: "nrCodBem == %i", bem)
         var fetchedBem : [Bem]
         do {
             

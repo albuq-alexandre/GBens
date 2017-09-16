@@ -31,6 +31,7 @@
 		385812161EFF1525007CD2E7 /* BensBackupFirebase.json in Resources */ = {isa = PBXBuildFile; fileRef = 385812151EFF1525007CD2E7 /* BensBackupFirebase.json */; };
 		38A6B6811F647BF8006B90D8 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A6B6801F647BF8006B90D8 /* APIService.swift */; };
 		38C366D31F6CD37E0037BBC1 /* MKMapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C366D21F6CD37E0037BBC1 /* MKMapKit.swift */; };
+		38C366D51F6D71CF0037BBC1 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C366D41F6D71CE0037BBC1 /* UIImage.swift */; };
 		38EE7E9D1F3FF00F006EC9D8 /* Bem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E951F3FF00F006EC9D8 /* Bem+CoreDataClass.swift */; };
 		38EE7E9E1F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E961F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift */; };
 		38EE7E9F1F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EE7E971F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift */; };
@@ -83,7 +84,7 @@
 		385811D91EFB2009007CD2E7 /* ListaBensTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaBensTableViewController.swift; sourceTree = "<group>"; };
 		385811DA1EFB2009007CD2E7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		385811DB1EFB2009007CD2E7 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		385811DC1EFB2009007CD2E7 /* Utilitarios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilitarios.swift; sourceTree = "<group>"; };
+		385811DC1EFB2009007CD2E7 /* Utilitarios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilitarios.swift; path = Controlers/Utilitarios.swift; sourceTree = "<group>"; };
 		385811F71EFB2028007CD2E7 /* AccountSwitcherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSwitcherTableViewCell.swift; sourceTree = "<group>"; };
 		385811F81EFB2028007CD2E7 /* bemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bemTableViewCell.swift; sourceTree = "<group>"; };
 		385811F91EFB2028007CD2E7 /* InventariosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventariosTableViewCell.swift; sourceTree = "<group>"; };
@@ -95,6 +96,7 @@
 		385812151EFF1525007CD2E7 /* BensBackupFirebase.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BensBackupFirebase.json; sourceTree = "<group>"; };
 		38A6B6801F647BF8006B90D8 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Service/APIService.swift; sourceTree = "<group>"; };
 		38C366D21F6CD37E0037BBC1 /* MKMapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKMapKit.swift; sourceTree = "<group>"; };
+		38C366D41F6D71CE0037BBC1 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = Service/UIImage.swift; sourceTree = "<group>"; };
 		38EE7E951F3FF00F006EC9D8 /* Bem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		38EE7E961F3FF00F006EC9D8 /* Bem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		38EE7E971F3FF00F006EC9D8 /* Dependencia+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dependencia+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -220,7 +222,6 @@
 				385811D91EFB2009007CD2E7 /* ListaBensTableViewController.swift */,
 				385811DA1EFB2009007CD2E7 /* LoginViewController.swift */,
 				385811DB1EFB2009007CD2E7 /* ScannerViewController.swift */,
-				385811DC1EFB2009007CD2E7 /* Utilitarios.swift */,
 				380668931F3183B00083B004 /* BemViewController.swift */,
 			);
 			path = Controlers;
@@ -264,6 +265,8 @@
 			children = (
 				38C366D21F6CD37E0037BBC1 /* MKMapKit.swift */,
 				385812121EFE23A8007CD2E7 /* NSManagedObjectContext.swift */,
+				385811DC1EFB2009007CD2E7 /* Utilitarios.swift */,
+				38C366D41F6D71CE0037BBC1 /* UIImage.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				385812131EFE23A8007CD2E7 /* NSManagedObjectContext.swift in Sources */,
+				38C366D51F6D71CF0037BBC1 /* UIImage.swift in Sources */,
 				385811E21EFB2009007CD2E7 /* LoginViewController.swift in Sources */,
 				385811FB1EFB2028007CD2E7 /* bemTableViewCell.swift in Sources */,
 				385811E01EFB2009007CD2E7 /* InventarioViewController.swift in Sources */,

@@ -12,4 +12,5 @@ import CoreData
 @objc(Bem)
 public class Bem: NSManagedObject {
 
+    
 }

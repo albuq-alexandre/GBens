@@ -19,6 +19,5 @@ extension UIImageView {
         self.layer.borderColor = UIColor.white.cgColor
         
 }
-
-    
+        
 }

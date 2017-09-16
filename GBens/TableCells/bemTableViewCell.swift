@@ -33,13 +33,16 @@ class bemTableViewCell: UITableViewCell {
         labelNome.text = _bem.nome
         labelPBMS.text = _bem.pbms
         labelCodBem.text = _bem.codBem
-        if _bem.scannedImage != nil {
-            imageBem.image = UIImage(data: _bem.scannedImage! as Data)
-            
+        
+               
+        
+        if let index : Int = try Int(_bem.categoria!) {
+           imageBem.image = UIImage().bemImage(index: index)
         } else {
-            imageBem.image = #imageLiteral(resourceName: "BemPhoto")
+           imageBem.image = #imageLiteral(resourceName: "BemPhoto")
         }
-
+            
+        
         imageBem.asAvatar()
         
         if _bem.scan_date != nil {
