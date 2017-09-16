@@ -106,8 +106,7 @@ public class APIService: NSObject {
                 
                     
                     b.categoria = (dictBem["categoria"] as? String ?? "03")
-                print (b.categoria)
-            
+                           
                 b.subcategoria = dictBem["subcategoria"] as? String
                 b.estadoConservacao = "Ótimo"
                 b.dt_aquisicao = dateFromString(dataS: (dictBem["dt_aquisicao"] as? String)!)

@@ -48,7 +48,7 @@ class BemViewController: UIViewController {
         super.viewDidLoad()
 
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
     
@@ -95,7 +95,7 @@ class BemViewController: UIViewController {
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        if let index : Int = try Int((_bem?.categoria!)!) {
+        if let index : Int = Int((_bem?.categoria!)!) {
             imageBem.image = UIImage().bemImage(index: index)
         } else {
             imageBem.image = #imageLiteral(resourceName: "BemPhoto")
@@ -374,7 +374,13 @@ extension BemViewController: MKMapViewDelegate {
             view!.isDraggable = true
             view!.animatesDrop = true
         } else {
-            view?.pinTintColor = UIColor.darkGray
+            if view?.pinTintColor == UIColor.darkGray {
+                view?.pinTintColor = UIColor.brown
+            } else {
+                view?.pinTintColor = UIColor.darkGray
+            }
+            
+            
             view?.annotation = annotation
         }
         
